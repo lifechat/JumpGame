@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JumpGame</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <canvas id="canvas">
+            抱歉，您的设备不支持HTML5
+        </canvas>
+        <div id="mainMenu">
+            <h1 style="display: none;">UP!</h1>
+            <H3 style="display: none;">版本 18.1220</H3>
+        </div>
+        <div id="gameOverMenu">
+            <h1>游戏结束</h1>
+            <h3 id="go_score">您得了0分</h3>
+            <a class="button" href="javascript:get_award()">谢谢!</a>
+        </div>
+        <div id="info" style="visibility: hidden;">
+            <div class="test1"></div>
+            <div class="test2"></div>
+            <div class="test3"></div>
+        </div>
+        <div id="hint">
+            <div class="hint1">控制主角处于云上！</div>
+        </div>
+        <img id="z1" src="./img/z1.png">
+        <img id="z2" src="./img/z2.png">
+        <img id="cloud1" src="./img/cloud.png">
+        <img id="base1" src="./img/base.png">
+        <div id="scoreBoard">
+            <div class="img_box">
+                <div class="head">
+                    <img src="./img/logo.png">
+                </div>
+            </div>
+            <p id="score">0</p>
+        </div>
+    </div>
+    <div class="start_top">
+    </div>
+    <!-- 播放音乐的 -->
+    <div class="music">
+        <audio id="music1" src="./bgm/bgmusic01M.mp3" loop="loop"></audio>
+        <audio id="music2" src="./bgm/jump.mp3" loop="loop"></audio>
+    </div>
+    <!-- 右上角控制背景音乐按钮 -->
+    <div class="music_btn">
+    </div>
+</body>
+<script src="./js/jquery.min.js"></script>
+<script src="./js/nosleep.js"></script>
+<script src="./js/total.js"></script>
+
+</html>
