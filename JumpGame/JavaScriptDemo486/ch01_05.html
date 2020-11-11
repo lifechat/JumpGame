@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>保护网页源代码</title>
+</head>
+<script>
+    function clear() {
+        Source = document.body.innerHTML;
+        document.open();
+        document.write("代码已经被屏蔽");
+        document.close();
+        document.title = "看不到源代码";
+        document.body.innerHTML = Source;
+    }
+</script>
+
+<body onload="clear()">
+    <marquee behavior="" direction="">测试嘿嘿嘿i </marquee>
+</body>
+
+</html>

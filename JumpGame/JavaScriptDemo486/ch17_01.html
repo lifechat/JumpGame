@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17-1 使用符号制作的进度条</title>
+</head>
+
+<body>
+    <form name="loading">
+        <p align=center>
+            <font color="#0155cc" size="2" face="Arial">
+                页面载入中,请稍等....
+            </font><br>
+            <input type="text" name="progress" size="46" style="font-family:Arial, Helvetica, sans-serif;font-weight: bold;color: #0066ff;background-color: #fef4d9;padding: 0px;border-style: none;">
+            <br>
+            <input type="text" name="percent" size="47" style="color:#0055bb;text-align:center;border-width:medium;border-style:none" />
+            <script>
+                var bar = 0; //进度条的进度
+                var line = "||"; //进度条的进展符号
+                var amount = "||";
+                count();
+
+                function count() {
+                    bar = bar + 2; //进度条加2
+                    amount = amount + line; //符号也跟着增加
+                    document.loading.progress.value = amount; //进度条显示符号
+                    document.loading.percent.value = bar + "%"; //显示进度
+                    if (bar < 100) { //判断进度条是否已经到头
+                        setTimeout(() => {
+                            count();
+                        }, 100);
+                    } else {
+                        window.location = "#";
+                    }
+                }
+            </script>
+        </p>
+    </form>
+</body>
+
+</html>

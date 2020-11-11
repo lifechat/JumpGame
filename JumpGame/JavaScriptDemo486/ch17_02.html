@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>滑动条（二）</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+        
+        #trackBar {
+            background-color: #666;
+        }
+        
+        #trackBar_slider {
+            border: 1px solid #808080;
+            background-color: #ffffff;
+        }
+        
+        #trackBar1 {
+            background-color: blue;
+        }
+        
+        #trackBar1_slider {
+            border: 1px solid #808080;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="info"></div>
+    <div id="trackBar1"></div>
+    <script>
+        // 设定div容器的大小
+        function setTrackBar(trackBar, min, max, barPos) {
+            this.trackBar = trackBar;
+            this.sliderIdStr = trackBar + "_slider";
+            this.trackBarId = document.getElementById(this.trackBar)
+            this.sliderId = null;
+            this.min = (min >= 0) ? min : 0;
+            this.max = (max >= min) ? max : min;
+            this.barPos = (barPos >= min && barPos <= max) ? barPos : min;
+
+            this.orientation = "h";
+            this.trackBarWidth = 100;
+            this.trackBarHeight = 10;
+            this.sliderWidth = 10;
+            this.sliderHeight = 10;
+            this.Create = Create;
+            this.draging = false;
+            this.offset = 0;
+
+            this.BeforeDrag = BeforeDrag;
+            this.OnDrag = OnDrag;
+            this.EndDrag = EndDrag;
+        }
+
+        function Create(trackBar1) {
+            this.trackBarId.innerHTML = "<div id=\"" + this.sliderIdStr + "\"" + "onmousedown=\"javascript:BeforeDrag(" + trackBar1 + ");\"" + "style=\"position:relative;cursorn:resize;\"></div>"
+            this.sliderId = document.getElementById(this.sliderIdStr);
+            this.sliderId.style.pixelTop = this.trackBarHeight - ((this.trackBarHeight - this.sliderHeight) * this.barPos) / (this.max - this.min) - this.sliderHeight;
+            this.trackBarId.style.width = this.trackBarWidth;
+            this.trackbarid.style.height = this.trackBarHeight
+            this.sliderId.style.width = this.sliderWidth;
+            this.sliderId.style.height = this.sliderHeight;
+
+            return true;
+        }
+        var curTrackBar = null;
+        //准备拖拽
+        function BeforeDrag() {}
+        //
+        function OnDrag() {
+
+        }
+        //结束拖拽
+        function EndDrag() {
+            if (!curTrackBar) {
+                return;
+            }
+        }
+    </script>
+</body>
+
+</html>
