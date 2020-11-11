@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>保护自己的网页不被放入框架_获取页面参数</title>
+</head>
+<script>
+    if (self != top) {
+        top.location = self.location;
+        console.log(self);
+        console.log(top)
+    }
+
+    function getError() {
+        try {
+            x = new test;
+        } catch (e) {
+            document.write(e.description)
+        }
+    }
+
+    function GetArgs(parms, parmName) {
+        var argIndex = parms.indexOf("?"); //获取？所在的位置
+        var arg = parms.substring(argIndex + 1);
+        var valArg = "";
+        args = arg.split("&");
+        for (var i = 0; i < array.length; i++) {
+            str = args[i];
+            var arg = str.split("=");
+            if (arg.length <= 1) continue;
+            if (arg[0] == parmName)
+                valArg = arg[1];
+        }
+        return valArg;
+    }
+
+    function PageParm() {
+        var myname = GetArgs(window.location.href, "name");
+        document.write("您请求的参数值为：" + myname)
+    }
+</script>
+
+<body>
+    <script>
+        var o = document.createElement("script");
+        o.text = "alert('test!')";
+        document.documentElement.childNodes[0].appendChild(o);
+    </script>
+</body>
+
+</html>

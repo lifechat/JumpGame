@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="11;url=www.baidu.com" />
+    <title>倒计时载入页面</title>
+    <script>
+        var startDay = new Date();
+        console.log(startDay)
+        var clockStart = startDay.getTime();
+        console.log(clockStart)
+
+        function initStopwatch() {
+            var myTime = new Date();
+            var timeNow = myTime.getTime();
+            var timeDiff = timeNow - clockStart;
+            this.diffSecs = timeDiff / 1000;
+            console.log(diffSecs)
+            return (this.diffSecs)
+        }
+
+        function getSecs() {
+            var mySecs = initStopwatch();
+            var mySecs1 = "" + mySecs;
+            //以倒计时方式显示时间
+            mySecs1 = 10 - eval(mySecs1.substring(0, mySecs1.indexOf("."))) + "秒";
+            document.form1.timespent.value = mySecs1;
+            window.setTimeout('getSecs()', 1000)
+        }
+    </script>
+</head>
+
+<body bgcolor="#fff" onload="window.setTimeout('getSecs()',1)">
+    <center>
+        10秒后加载页面：
+        <form name="form1">
+            <input type="text" size="9" name="timespent">
+        </form>
+    </center>
+
+</body>
+
+</html>
