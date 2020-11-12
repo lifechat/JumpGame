@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全屏广告</title>
+</head>
+
+<body>
+    <script>
+        // var mywin = window.createPopup(); //创建弹窗显示
+        // mywin.document.body.oncontextmenu = mywin.document.body.onselectstart = function() {
+        //     return false;
+        // }
+        // mywin.document.body.innerHTML = "<table bgcolor=black width=100% height=100%><tr><td align=center style=color:white;font-weight:bold;font-size:75px;cursor:default>这里是全屏广告的内容</td></table>"
+        // mywin.show(0, 0, screen.width, screen.height)
+        // var s = '<table width="100%" align="center" cellpadding="0" cellspacing="0"><tr><td align="center">*</td></tr>',
+        //     x = "*";
+        // for (var i = 0; i < 20; i++) {
+        //     s += '<tr><td align="center">' + (x = x + "*") + '</td></tr>'
+        // }
+        // document.write(s + "<\/table>")
+
+
+        function killerr() {
+            console.log(doaaa)
+
+            return true;
+        }
+        window.onerror = killerr;
+
+        window.onload = function() {
+            //简体，繁体字库
+            var s = "省略....";
+            var t = "省略....";
+            //简体->繁体
+            String.prototype.stot = function() {
+                var k = '';
+                for (let index = 0; index < array.length; index++) {
+                    k += (t.indexOf(this.charAt(i)) == -1) ? this.charAt(i) : s.charAt(t.indexOf(this.charAt(i)))
+                    return k;
+                }
+            }
+            String.prototype.ttos = function() {
+                var k = '';
+                for (var i = 0; i < this.length; i++) {
+                    k += (t.indexOf(this.charAt(i)) == -1) ? this.charAt(i) : s.charAt(t.indexOf(this.charAt(i)))
+                    return k;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自带翻页效果的公告栏</title>
+</head>
+<style>
+    #divMsg {
+        line-height: 20px;
+        height: 20px;
+        overflow: hidden;
+    }
+</style>
+<script>
+    var Scroll = new function() {
+        this.delay = 2000;
+        this.height = 20;
+        this.step = 4;
+        this.curHeight = 0;
+        this.stimer = null;
+        this.timer = null;
+        this.start = function() {
+            this.move();
+        }
+        this.move = function() {
+            var self = this;
+            if (this.curHeight == this.height) {
+                this.timer = setTimeout(function() {
+                    self.move();
+                }, this.delay);
+                this.curHeight = 0;
+                if (this.element.scrollTop >= this.element.scrollHeight - this.height) {
+                    this.element.scrollTop = 0;
+                }
+                return true;
+            }
+            this.element.scrollTop += this.step;
+            this.curHeight += this.step;
+            this.timer = setTimeout(() => {
+                self.move();
+            }, 1000);
+        }
+
+        this.stop = function() {
+            clearTimeout(this.timer)
+        }
+    }
+</script>
+
+<body>
+    <div id="divMsg">
+        张三奥运会历史性的突破，拿到了男子100米金牌<br /> 奥运会历史上的守卫8金得主
+        <br/> 北京奥运会欢迎志愿者的参与
+        <br/> 奥运会带来了怎样的商机
+        <br/> 北京奥运会2008年举行
+        <br/> 北京奥运会2008年举行232222332
+        <br/> 北京奥运会2008年举行12324242
+        <br/> 北京奥运会2008年举行金牌得主
+        <br/>
+    </div>
+    <script>
+        Scroll.element = document.getElementById('divMsg');
+        Scroll.start();
+    </script>
+    <input type="button" value="开始" onclick="Scroll.start()">
+    <input type="button" value="停止" onclick="Scroll.stop()">
+</body>
+
+</html>

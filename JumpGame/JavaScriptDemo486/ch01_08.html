@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用javascript随机修改页面的标题</title>
+</head>
+
+<body>
+    <script>
+        var til = new Array(5);
+        til[0] = "第一个标题";
+        til[1] = "第二个标题";
+        til[2] = "第三个标题";
+        til[3] = "第四个标题";
+        til[4] = "第五个标题";
+
+        var indextitle = Math.floor(Math.random() * til.length); //获取一个随机整数
+        onload = function chaTitle() {
+            var curTitle = til[indextitle];
+            window.document.title += "-" + curTitle;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js遍历对象中的所有属性</title>
+    <script>
+        var Person = new Object();
+        Person.name = "张三";
+        Person.age = "26";
+        Person.phone = "1008611";
+        for (const parm in Person) {
+            alert("属性: '" + parm + "'值:" + Person[parm])
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

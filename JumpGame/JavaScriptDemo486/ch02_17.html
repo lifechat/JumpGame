@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态设置控件的事件</title>
+    <script>
+        function addClick(obj) {
+            console.log(obj)
+            obj.onclick = function() {
+                alert("动态添加事件成功")
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <input id="Button2" type="button" value="测试" />
+    <br/>
+    <input type="button" id="Button1" value="为上面的按钮添加事件" onclick="addClick(Button2)">
+</body>
+
+</html>

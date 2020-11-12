@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>输入的英文自动全部大写</title>
+</head>
+
+<body>
+    <div id="contaner">
+        输入英文小写字母，测试
+        <input type="text" onkeydown="this.value=this.value.toUpperCase()">
+    </div>
+</body>
+<script>
+    function hidediv() {
+        document.getElementById("contaner").style.display = "none";
+    }
+    setTimeout(() => {
+        hidediv();
+    }, 5000);
+</script>
+
+</html>

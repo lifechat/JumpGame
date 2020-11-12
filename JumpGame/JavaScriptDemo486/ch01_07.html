@@ -8,16 +8,14 @@
     <title>倒计时载入页面</title>
     <script>
         var startDay = new Date();
-        console.log(startDay)
         var clockStart = startDay.getTime();
-        console.log(clockStart)
 
         function initStopwatch() {
             var myTime = new Date();
             var timeNow = myTime.getTime();
             var timeDiff = timeNow - clockStart;
+            console.log(timeDiff)
             this.diffSecs = timeDiff / 1000;
-            console.log(diffSecs)
             return (this.diffSecs)
         }
 

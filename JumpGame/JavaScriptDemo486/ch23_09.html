@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汉字按拼音排序</title>
+</head>
+<script>
+    function txtSort() {
+        var txtarray = document.getElementById("txt").value;
+        txtarray = txtarray.split(",");
+        txtarray.sort();
+        txtarray.sort(function(txtarray, b) {
+            return txtarray.localeCompare(b)
+        });
+        document.getElementById("txt2").value = txtarray;
+    }
+</script>
+
+<body>
+    排序前:<textarea id="txt">
+        占三，里斯，亚当，苹果，香蕉，政治，历史
+    </textarea></br>
+    <input type="button" id="Button1" value="排序" onclick="txtSort()"></br>
+    排序后<textarea id="txt2"></textarea></br>
+</body>
+
+</html>

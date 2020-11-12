@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>按Enter键调用登录按钮</title>
+</head>
+<script>
+    function keyLogin() {
+        if (event.keyCode == 13) {
+            document.getElementById("input1").click();
+        }
+    }
+</script>
+
+<body onkeydown="keyLogin()">
+    <input id="input1" value="登录" type="button" onclick="alert('调用成功')">
+</body>
+
+</html>
