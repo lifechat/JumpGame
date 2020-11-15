@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复选框全选2</title>
+</head>
+
+<body>
+    <script>
+        function checkAll(str) {
+            var a = document.getElementsByName(str);
+            var n = a.length;
+            for (var i = 0; i < n; i++) {
+                a[i].checked = window.event.srcElement.checked; //通过点击的按钮判断是选中还是未选
+            }
+        }
+    </script>
+    <input type="checkbox" name=All onclick="checkAll('ck')">全选<br/>
+    <input type="checkbox" name="ck">体育<br/>
+    <input type="checkbox" name="ck">旅游<br/>
+    <input type="checkbox" name="ck">饮食<br/>
+    <input type="checkbox" name="ck">影视<br/>
+    <input type="checkbox" name="ck">音乐<br/><br/>
+</body>
+
+</html>

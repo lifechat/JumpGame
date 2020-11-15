@@ -4,17 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>改变select选中项的颜色</title>
+    <title>改变选中项的颜色</title>
 </head>
 
 <body>
-    <select name="" id="">
-       <opttion></opttion>
-       <opttion></opttion>
-       <opttion></opttion>
-       <opttion></opttion>
-       <opttion></opttion>
-       <opttion></opttion>
+    <script>
+        function setColor(_parent, _child) {
+            for (var i = 0; i < _parent.options.length; i++) {
+                if (_parent.options[i] == _child) {
+                    _parent.options[i].style.color = "yellow";
+                    _parent.options[i].style.backgroundColor = 'blue';
+                } else {
+                    _parent.options[i].style.color = "";
+                    _parent.options[i].style.backgroundColor = '';
+                }
+            }
+            document.body.focus();
+        }
+    </script>
+    <select onchange="setColor(this,options[selectedIndex]);">
+       <option style="color:yellow;background-color:blue;">选项1</opttion>
+       <option>选项2</opttion>
+       <option>选项3</opttion>
+       <option>选项4</opttion>
+       <option>选项5</opttion>
    </select>
 </body>
 

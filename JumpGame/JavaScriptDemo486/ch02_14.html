@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择不同的列表项时显示不同的按钮</title>
+</head>
+<script>
+    function butSelect() {
+        var selVal = document.getElementById("sel").value;
+        if (selVal == "1") {
+            document.getElementById("td").innerHTML =
+                '<input type="button" value="按钮1" onclick="btnc1();">';
+        } else if (selVal == "2") {
+            document.getElementById("td").innerHTML =
+                '<input type="button" value="按钮2" onclick="btnc2();">';
+        }
+    }
+
+    function btnc1() {
+        alert("单击了按钮1")
+    }
+
+    function btnc2() {
+        alert("单击了按钮2")
+    }
+</script>
+
+<body>
+    <table>
+        <tr>
+            <td>
+                <select onchange="butSelect();" id="sel">
+                    <option value=""></option>
+                    <option value="1">but1</option>
+                    <option value="2">but2</option>
+                </select>
+            </td>
+            <td id="td"></td>
+        </tr>
+    </table>
+</body>
+
+</html>

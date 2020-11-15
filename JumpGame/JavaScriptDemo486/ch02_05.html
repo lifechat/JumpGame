@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>按钮的嵌入效果</title>
+    <style>
+        .over {
+            color: yellow;
+            background: navy;
+        }
+        
+        .down {
+            color: yellow;
+            background: navy;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="button" onmouseover="this.className='over';" onmouseout="this.className='';" onmousedown="this.className='down';" onmouseup="this.className='over';" value="让按钮嵌入" onclick="this.value='嵌入成功'" name="Button">
+    <form>
+        <input type="button" value="修改状态栏" onClick="self.status='欢迎光临我们的工作室！'">
+    </form>
+</body>
+
+</html>

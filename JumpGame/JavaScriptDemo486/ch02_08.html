@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>取得控件的绝对位置</title>
+</head>
+<script>
+    function getAddress(e) {
+        var t = e.offsetTop;
+        var l = e.offsetLeft;
+        console.log(t);
+        console.log(l)
+        while (e = e.offsetParent) {
+            t += e.offsetTop; //获取x
+            l += e.offsetLeft; //获取Y
+        }
+        console.log("x坐标=" + t + "y坐标为=" + l)
+
+    }
+</script>
+
+<body>
+    <input id="Button1" value="坐标" onclick="getAddress(this)" type="button">
+</body>
+
+</html>

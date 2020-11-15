@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态创建按钮</title>
+</head>
+<script>
+    var i = 0;
+
+    function addInput() {
+        var o = document.createElement("input");
+        o.type = "button";
+        o.value = "按钮" + i++;
+        o.attachEvent("onclick", addInput);
+        document.body.appendChild(o);
+        o = null;
+    }
+</script>
+
+<body onload="addInput();">
+
+</body>
+
+</html>
