@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>判断文本回车的数量</title>
+</head>
+<script>
+    var bForbidden = false;
+    var ch;
+    var strForbidden = new Array("<", ">", "."); //罗列所有禁止的方法字符
+    function chk(str) {
+        for (var i = 0; i < strForbidden.length; i++) {
+            for (var j = 0; j < str.length; j++) {
+                ch = str.substr(j, 1);
+                if (ch = strForbidden[i]) {
+                    bForbidden = true;
+                }
+            }
+        }
+        if (bForbidden) {
+            alert("包含特殊字符，已经被禁止")
+        }
+    }
+    // function getCount() {
+    //     var count = document.all("Textarea").innerHTML.split('\n').length - 1; //获得回车的个数
+    //     alert("总共有" + count + "个回车")
+    // }
+</script>
+
+<body>
+    <!-- <textarea id="Textarea" cols="30" rows="8"></textarea>
+    <input type="button" id="Button1" value="获取" onclick="getCount()"> -->
+    <input type="text" name="txt1" value="this is test !">
+    <input type="button" value="测试文本" onclick="javascript:chk('txt1.value')">
+</body>
+
+</html>

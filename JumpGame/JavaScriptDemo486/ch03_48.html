@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本编辑器</title>
+</head>
+
+<body>
+    <script>
+        var edit; //当前选择的文本编辑区域对象
+        var RangeType; //对象类别
+        //开始初始化编辑器----编辑区域是Iframe
+        function start() {
+            Editor.document.designMode = 'ON';
+            Editor.document.open();
+            Editor.document.write(myTextArea.value);
+            Editor.document.close();
+            fnInit();
+        }
+
+        function setFocus() {
+            Editor.focus(); //编辑器或去焦点
+        }
+
+        function selectRange() {
+            edit = Editor.document.selection.createRange(); //编辑区的文本选择区域
+            RangeType = Editor.document.selection.type;
+        }
+        //包装文本选定区域的执行命令
+        function execCommand(command, para) {
+            setFocus();
+            selectRange();
+            if (para == "") //没有参数的情况
+                edit.execCommand(command);
+            else
+                edit.execCommand(command, false, arguments[1]);
+            Editor.focus();
+            if (RangeType != "Control")
+                edit.select();
+        }
+        //获取或设置文本的格式----字体、字号
+        function doSelectC(src, el) {
+            var Index = el.selectedIndex;
+            if (Index != 0) {
+                el.selectedIndex = 0;
+                execCommand(str, el.options[Index].text);
+            }
+        }
+        //获取或设置当前选定模块的格式化标签
+        function doSeletCl(str, el) {
+            var Index = el.selectedIndex;
+            if (Index != 0) {
+                el.selectedIndex = 0;
+                execCommand(str, "<" + el.options[Index].value + ">");
+            }
+        }
+        //初始化
+        function fnInit() {
+            for (var i; i < document.all.length; i++)
+                document.all(i).unselectable = "off"; //指定不选中任何元素
+            getSystemFonts();
+        }
+        //获取系统字体的方法
+        function getSystemFonts() {
+            var a = dlgHelper.fonts.count;
+            var fArray = new Array();
+            var oOption = document.createElement("option");
+            //使用DOM方法createElement将字体依次添加到复选列表当中
+            for (i = 1; i < dlgHelper.fonts.count; i++) {
+                fArray[i] = dlgHelper.fonts(i);
+                var oOption = document.createElement("option");
+                oOption.text = fArray[i];
+                oOption.value = i;
+                selectFontName.add(oOption);
+            }
+        }
+        //格式化，保全scrept,textarea,xmp,pre和style内容
+        function formatfor(va) {
+            var t = va.replace(/\r/g, '');
+            t = t.replace(/(<script|textarea|xmp|pre|style.*?>)([^\r]*?)(<\/\2>)/img, function() {
+                return arguments[1] + arguments[3].replace(/\n/g, "r") + arguments[4]
+            })
+            t = t.replace(/\n/g, "");
+            return t;
+        }
+        //改变字体的方法
+        function fontsize(el) {
+            var Index = el.selectedIndex;
+            var addpre = "<font size=" + el.options[Index].value + ">";
+            if (Index > 7) {
+                var addpre = "<font style='font-size:" + el.options[Index].value + "pt'>";
+
+                var oSel = Editor.document.selection.createRange();
+                var sBookmark = oSel.getBookmark();
+                var oSelhtml = oSel.htmlText;
+                if (oSelhtml != "") {
+                    //定位选中内容
+                    var conts = oSelhtml;
+                    var textLength = Editor.document.body.innerText.length;
+                    oSel.moveStart("character", -1 * textLength);
+                    var contp = formatfor(oSel.htmlText);
+                    var conta = formatfor(Editor.document.body.innerHTML);
+                    var contpa = '';
+                    var partC = "";
+                    var partB = "";
+                    var partA = "";
+                    var m = 0;
+                    m = conta.indexOf(contp.substr(0, 3));
+                    var f = contp.length;
+                    for (; f > 0; f--) {
+                        if (conta.substr(m, f) == contp.substr(0, f)) {
+                            contpa = contp.substr(0, f);
+                            partC = conta.substr(m + f);
+                            break;
+                        }
+                    }
+                    var ko = contp.substr(f);
+                    var kol = ko.length;
+                    var ty = conta.substr(m + f, kol);
+                    var hu = "";
+                    for (var b = 1; b < kol; b++) {
+                        if (ko.substr(b) == ty.substr(0, kol - b)) {
+                            hu = ko.substr(b);
+                            contpa += hu;
+                            partC = partC.substr(kol - b);
+                            break;
+                        }
+                    }
+                    var k = contpa.length;
+                    cont = conts.replace(/\n/g, "");
+                    var u = cont.length;
+                    if (cont == contpa.substr(k - u)) {
+                        partB = count;
+                        partA = conta.substr(0, k - u)
+                    } else {
+                        for (u = count.length; u > 0; u--) {
+
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

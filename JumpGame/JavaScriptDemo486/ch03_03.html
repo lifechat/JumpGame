@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文字过长时的省略界面</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    var sText = "这是一段很长的文本，希望通过省略号实现";
+    var content;
+
+    function OnitText() {
+        content = "<nobr>" + sText + "</nobr>";
+        document.getElementById("mydiv").innerHTML = content;
+    }
+</script>
+<input type="button" value="加载" onclick="OnitText()">
+<div style="width: 150px;height: 50px;border: 1px solid black;overflow: hidden;text-overflow: ellipsis;" id="mydiv"></div>
+
+</html>

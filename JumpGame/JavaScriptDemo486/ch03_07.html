@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>禁止文本的复制和粘贴</title>
+</head>
+
+<body onselectstart="return false">
+    <textarea name="" id="" cols="30" rows="10" oncopy="document.selection.empty()" onpaste="return false">
+        测试是否可以复制粘贴
+    </textarea>
+
+</body>
+
+</html>

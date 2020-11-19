@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>限定文本框可输入字符数</title>
+</head>
+
+<body>
+    <script>
+        function textcontrol(content) {
+            if (content.length > 10) {
+                document.getElementById("txt").value = document.getElementById("txt").value.substring(0, 5);
+            }
+        }
+    </script>
+    <textarea name="" id="txt" cols="50" rows="10" onchange="textcontrol(this.value)"></textarea>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.5首字母变为大写</title>
+</head>
+
+<body>
+    <input type="text" name="txt1" value="this is test">
+    <input type="button" value="转换文本" onclick="javascript:changeCase('txt1')" />
+</body>
+<script>
+    function changeCase(frmObj) {
+        var index;
+        var tmpStr;
+        var tmpChar;
+        var preString;
+        var postString;
+        var strlen;
+        tmpStr = frmObj.value.toLowerCase(); //转换为全部小写
+        strlen = tmpStr.length;
+        if (strlen > 0) {
+            for (index = 0; index < strlen; index++) {
+                if (index == 0) {
+                    tmpChar = tmpstr.substring(0, 1).toUpperCase();
+                    postString = tmpStr.substring(1, strlen);
+                    tmpStr = tmpChar + postString;
+                } else {
+                    tmpChar = tmpStr.substring(index, index + 1);
+                    //如果是第二个单词（通过空格判断）
+                    if (tmpChar == "" && index < (strlen - 1)) {
+                        tmpChar = tmpStr.substring(index + 1, index + 2).toUpperCase();
+                        preString = tmpstr.substring(0, index + 1);
+                        postString = tmpStr.substring(index + 2, strlen);
+                        tmpStr = preString + tmpChar + postString;
+                    }
+                }
+            }
+        }
+        frmObj.value = tmpStr;
+    }
+</script>
+
+</html>

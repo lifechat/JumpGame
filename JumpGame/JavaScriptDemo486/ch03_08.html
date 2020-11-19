@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控制两个文本框只输入其中一个</title>
+</head>
+
+<body>
+    <script>
+        function checkFields() {
+            name = document.submitform.name.value;
+            email = document.submitform.email.value;
+            if ((name == "") && (email == "")) {
+                alert("请输入姓名和邮箱！")
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>
