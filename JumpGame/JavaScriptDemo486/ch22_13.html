@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用javascript实现编码解码</title>
+</head>
+<script>
+    function tt(obj, str) {
+        if (str == null) {
+            obj.value = escape(obj.value); //编码后的效果
+            alert(obj.value);
+        } else {
+            obj.value = unescape(obj.value); //解码后的效果
+            alert(obj.value)
+        }
+    }
+</script>
+
+<body>
+    <textarea name="mytxt" id="ta" cols="30" rows="10"></textarea><br>
+    <input type="button" value="编码" onclick="tt(document.all.mytxt)">
+    <input type="button" value="解码" onclick="tt(document.all.mytxt,1)">
+</body>
+
+</html>

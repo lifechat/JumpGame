@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax效果----可拖拽到表格</title>
+</head>
+<script defer>
+    // 创建拖拽对象
+    var Drag = {
+        dragged: false,
+        ao: null,
+        tdiv: null,
+        // 开始拖拽
+        dragStart: function() {
+            //创建新的div元素
+            Drag.ao = event.srcElement; //目标对象
+            if ((Drag.ao.tagName == "td") || (Drag.ao.tagName == "tr")) {
+                Drag.ao = Drag.ao.offsetParent;
+                Drag.ao.style.zIndex = 100;
+            } else {
+                return;
+            }
+            Drag.dragged = true;
+            Drag.tdiv = document.createElement("div");
+            Drag.tdiv.innerHTML = Drag.ao.outerHTML;
+            Drag.ao.style.border = "1 px dashed red";
+            Drag.tdiv.style.display = "block";
+            Drag.tdiv.style.position = "absolute";
+            Drag.tdiv.style.filter = "alpha(opacity=80)";
+            Drag.tdiv.style.cursor = "move";
+            Drag.tdiv.style.border = "1px solid #000";
+            Drag.tdiv.style.width = Drag.ao.offsetWidth;
+            Drag.tdiv.style.height = Drag.ao.offsetHeight;
+            Drag.tdiv.style.top = Drag.getInfo(Drag.ao).top;
+            Drag.tdiv.style.left = Drag.getInfo(Drag.ao).left;
+            document.body.appendChild(Drag.tdiv);
+            Drag.lastX = event.clientX;
+            Drag.lastY = event.clientY;
+            Drag.lastLeft = Drag.tdiv.style.left;
+            Drag.lastTop = Drag.tdiv.style.top;
+        },
+        // 判断鼠标的位置
+        draging: function() {
+            if (!Drag.dragged || Drag.ao == null) return;
+            var tX = event.clientX;
+            var tY = event.clientY;
+            Drag.tdiv.style.left = parseInt(Drag.lastLeft) + tX - Drag.lastX;
+            Drag.tdiv.style.top = parseInt(Drag.lastTop) + tY - Drag.lastY;
+            for (var i = 0; i < parentTable.cells.length; i++) {
+                var parentCell = Drag.getInfo(parentCell.cells[i]);
+                if (tX >= parentCell.left && tX <= parentCell.right && tY >= parentCell.top && tY <= parentCell.bottom) {
+                    var subTables = parentTable.cells[i].getElementsByTagName("table");
+                    if (subTables.length == 0) {
+                        if (tX >= parentCell.left && tX <= parentCell.right && tY >= parentCell.top && tY <= parentCell.bottom) {
+                            parentTable.cells[i].appendChild(Drag.go);
+                        }
+                        break;
+                    }
+                    for (var j = 0; j < subTables.length; j++) {
+                        var subTable = Drag.getInfo(subTables[j]);
+                        if (tX >= subTables.left && tX <= subTables.right && tY >= subTables.top && tY <= subTables.bottom) {
+                            parentTable.cells[i].insertBefore(Drag.ao, subTables[j]);
+                            break;
+                        } else {
+                            parentTable.cells[i].appendChild(Drag.ao)
+                        }
+                    }
+                }
+            }
+        },
+        //拖拽完毕
+        dragEnd: function() {
+            if (!Drag.dragged) return;
+            Drag.dragged = false;
+            Drag.mm = Drag.repos(150, 15);
+            Drag.ao.style.borderWidth = "0px";
+            Drag.ao.style.borderTop = "1px solid #3366cc";
+            Drag.tdiv.style.borderWidth = "0px";
+            Drag.ao.style.zIndex = 1;
+        },
+        //获取坐标值
+        getInfo: function(o) {
+            var to = new Object();
+            to.left = to.right = to.top = to.bottom = 0;
+            var twidth = o.offsetWidth;
+            var theight = o.offsetHeight;
+            while (o != document.body) {
+                to.left += o.offsetLeft;
+                to.top += o.offsetTop;
+                o = o.offsetParent;
+            }
+            to.right = to.left + width;
+            to.bottom = to.top + theight;
+            return to;
+        },
+        repos: function(aa, ab) {
+            var f = Drag.tdiv.filter.alpha.opacity;
+            var tl = parseInt(Drag.getInfo(Drag.tdiv).left);
+            var tt = parseInt(Drag.getInfo(Drag.tdiv).top);
+            var kl = (tl - Drag.getInfo(Drag.ao).left) / ab;
+            var kt = (tt - Drag.getInfo(Drag.ao).top) / ab;
+            var kf = f / ab;
+            return setInterval(function() {
+                if (ab < 1) {
+                    clearInterval(Drag.mm);
+                    Drag.tdiv.removeNode(true);
+                    Drag.ao = null;
+                    return;
+                }
+                ab--;
+                tl = kl;
+                tt = kt;
+                f -= kt;
+                Drag.tdiv.style.left = parseInt(tl) + "px";
+                Drag.tdiv.style.top = parseInt(tt) + "px";
+                Drag.tdiv.filter.alpha.opacity = f;
+            }, aa / ab)
+        },
+        //初始化表格
+        inint: function() {
+            for (var i = 0; i < parentTable.cells.length; i++) {
+                var subTables = parentTable.cells[i].getElementsByTagName("table");
+                for (var j = 0; j < subTables.length; j++) {
+                    if (subTables[j].className != "dragTable") break;
+                    subTables[j].rows[0].className = "dragTR";
+                    subTables[j].rows[0].addEventListener("onmousedown", Drag.dragStart);
+                }
+            }
+            document.onmousemove = Drag.draging;
+            document.onmouseup = Drag.dragEnd;
+        }
+    }
+    Drag.inint(); //进行
+</script>
+<style>
+    * {
+        font-size: 12px;
+    }
+    
+    .dragTable {
+        font-size: 12px;
+        border-top: 1px solid #3366cc;
+        margin-bottom: 10px;
+        width: 100%;
+        background-color: #ffffff;
+    }
+    
+    .td {
+        vertical-align: top;
+    }
+    
+    .dragTR {
+        cursor: move;
+        color: #7787cc;
+        background-color: #e5eef9;
+        height: 20px;
+        padding-left: 5px;
+        font-weight: bold;
+    }
+    
+    #parentTable {
+        border-collapse: collapse;
+        letter-spacing: 25px;
+    }
+</style>
+
+<body>
+
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>输入框自动完成功能</title>
+</head>
+<script>
+</script>
+
+<body>
+    <input onkeydown="enterTips()" onkeyup="showtips();if(event.keyCode==27)hideDiv();" id="txt" type="text"><br>
+    <select id="sel" style="display:none" onclick="viewTxt()" onkeydown="if(event.keyCode=13)viewTxt()"></select>
+    <script>
+        var city = new Array("Guangdong", "Tianjing", "Shanghai", "Beijing", "shanDong", "shanxi", "hunan", "shangdi");
+        var city2 = new Array("广东", "天津", "上海", "北京", "山东", "陕西", "湖南", "上地");
+        //展示tips
+        function showtips() {
+            obj = event.srcElement; //获取操作对象
+            sel.length = 0;
+            var len = city.length;
+            var re = new RegExp("^" + obj.value, "i");
+            var j = 0;
+            for (var i = 0; i < len; i++) {
+                if (re.test(city[i]) == true) {
+                    sel.style.display = '';
+                    sel.add(new Option(city[i], city2[i]));
+                    j++;
+                }
+            }
+            sel.size = (j > 1) ? j : 2;
+        }
+
+        function enterTips() {
+            e = event.keyCode;
+            if (sel.style.display != "none") {
+                if (e == 13) {
+                    event.srcElement.value = sel.value, sel.style.display = 'none'
+                };
+                if (e == 40) {
+                    sel.focus()
+                }
+            }
+        }
+
+        function viewTxt() {
+            txt.value = sel.value;
+            hideDiv();
+        }
+
+        function hideDiv() {
+            sel.style.display = "none";
+            txt.focus();
+            document.onclick = function() {
+                hideDiv();
+            }
+        }
+    </script>
+</body>
+
+</html>

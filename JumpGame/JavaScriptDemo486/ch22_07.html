@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用XMLHTTP获取天气预报</title>
+</head>
+<script>
+    const xmlhttp;
+
+    function getWeather() {
+        //创建异步对象
+        xmlhttp = new ActiveXObject("Msxml12.XMLHTTP");
+        //加载服务器，注意url参数的使用
+        xmlhttp.Open("GET", "http://tw.weather.yahoo.com/world_single.html?city=10101", false);
+        //异步对象事件挂钩
+        xmlhttp.onreadystatechange = stateChange;
+        //发送请求，无参数
+        xmlhttp.Send(null);
+    }
+
+    function stateChange() {
+        if (xmlhttp.readystate == 4 && xmlhttp.status == 200) {
+            //获取返回的数据
+            var data = xmlhttp.responseText;
+            //过滤自己需要的数据
+            var begin = data.indexOf("国际个别都市 start");
+            var end = data.indexOf("国际个别都市 end");
+            var weather = data.substring(begin + 15, end);
+            //填充天气内容
+            document.getElementById("divweather").innerHTML = weather;
+            //显示结果
+            document.getElementById("divweather").style.visibility = "visible";
+        }
+    }
+</script>
+
+<body onload="getWeather()">
+    <div align="center" id="today_time">今天的日期</div>
+    <div align="center" id="divweather"></div>
+</body>
+<script>
+    var x = new Array("星期日", "星期一", "星期二");
+    var x = x.concat("星期三", "星期四", "星期五");
+    var x = x.concat("星期六");
+    var today_time = new Date();
+    document.all("today_time").innerText = today_time.getFullYear() + '年' + (today_time.getMonth() + 1) + '月' + today_time.getDate() + '日\n' + x[today_time.getDay()];
+</script>
+
+</html>

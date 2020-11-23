@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用userDate保存文本内容</title>
+</head>
+<style>
+    .userData {
+        behavior: url(#default#userdata);
+    }
+</style>
+<script>
+    var Form1 = document.getElementById("Form1")
+    var myText = document.getElementById("myText").value;
+
+    function saveInput() {
+        var oPersist = Form1.myText;
+        console.log(oPersist)
+        oPersist.setAttribute("sPersist", oPersist.value)
+        oPersist.save("oXMLBranch")
+    }
+
+    function loadInput() {
+        var oPersist = Form1.myText;
+        oPersist.load("oXMLBranch");
+        oPersist.value = oPersist.getAttribute("sPersist");
+    }
+</script>
+
+<body>
+    <from id="Form1">
+        <input class="userData" type="text" id="myText">
+        <input type="button" value="加载" onclick="loadInput()">
+        <input type="button" value="保存" onclick="saveInput()">
+    </from>
+</body>
+
+</html>

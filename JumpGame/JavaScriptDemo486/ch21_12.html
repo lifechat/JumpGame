@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表格操作常用方法</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    Function.prototype.bind = function() {
+        //数据的绑定
+        var __method = this,
+            args = $A(arguments),
+            object = args.shift();
+        return function() {
+            return __method.apply(object, args.concat($A(arguments)));
+        }
+    }
+
+    function CTable(id, rows) {
+        this.tbl = typeof(id) == "string" ? document.getElementById(id) : id;
+        if (rows && /^\d+$/.test(rows)) this.addrows(rows) //为表格添加行数
+    }
+    CTable.prototype = {
+        addrows: function(n) {
+            new Array(n).each(this.add.bind(this))
+        },
+        add: function() {
+            //添加一行
+            var self = this;
+            var tr = self.tbl.insertRow(-1),
+                td1 = tr.insertCell(-1),
+                td2 = tr.insertCell(-1),
+                td3 = tr.insertCell(-1);
+            var chkbox = document.createElement("input");
+            chkbox.type = "checkbox";
+            chkbox.onclick = self.highlight.bind(self);
+            td1.appendChild(chkbox);
+            td1.setAttribute("width", "35")
+            td2.innerHTML = Math.ceil(Math.random() * 99);
+            td3.innerHTML = Math.ceil(Math.random() * 99)
+        },
+        del: function() {
+            var self = this;
+            $A(self.tbl.rows).each(function(tr) {
+                if (self.getChkBox(tr).checked) tr.parentNode.removeChild(tr)
+            })
+        }
+
+    }
+    var o = new Function();
+    console.log(o.bind())
+</script>
+
+</html>
