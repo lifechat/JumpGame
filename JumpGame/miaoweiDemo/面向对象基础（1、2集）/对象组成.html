@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>无标题</title>
+</head>
+
+<body>
+    <script>
+        var arr = [1, 2, 3, 4, 50];
+        var a = 12; //变量自由
+        arr.a = 5; //引用类型，属性属于arr这个对象
+        function show() { //函数
+            alert('a');
+        }
+
+        arr.fn = function() { //方法
+            alert('a')
+        }
+    </script>
+</body>
+
+</html>

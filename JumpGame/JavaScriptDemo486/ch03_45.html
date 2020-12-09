@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>textarea中的文本插入</title>
+</head>
+<!-- 选择文本时保存光标位置-单击同样实现 -->
+<script>
+    function storePos(txtobj) {
+        if (txtobj.createTextRange) {
+            txtobj.caretPos = document.selection.createTextRange().duplicate();
+        }
+    }
+
+    function insertTextArea(txtobj, text) {
+        if (txtobj.createTextRange && txtobj.caretPos) {
+            var caretPos = txtobj.caretPos;
+            caretPos.text = caretPos.text.charAt(caretPos.text.length - 1) == '' ? text + '' : text;
+        } else {
+            txtobj.value = text;
+        }
+    }
+</script>
+
+<body>
+    <textarea name="mytxt" wrap="soft" onclick="storePos(this)" onkeyup="storePos(this);" cols="25" rows="5" onselect="storePos(this);">
+     实现文本的插入，文本框可以实现增删改查
+ </textarea><br>
+    <input type="text" name="insertTxt" size="20" value="要插入的文本"><br>
+    <input type="button" value="插入文本" onclick="insertTextArea(mytxt,insertTxt.value);">
+</body>
+
+</html>

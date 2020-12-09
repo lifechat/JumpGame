@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>textarea内实现行的翻页效果</title>
+</head>
+
+<body>
+    <textarea id="myTxt" style="overflow: hidden;" height="20" width="20">
+        测试数据
+        测试数据
+        测试数据
+        测试数据
+        测试数据
+        测试数据测试数据
+        测试数据
+        测试数据
+        测试数据测试数据
+        测试数据
+        测试数据
+        测试数据
+        测试数据
+        测试数据
+        测试数据测试数据测试数据测试数据
+        测试数据
+        测试数据
+        测试数据
+        测试数据
+        测试数据
+        测试数据
+    </textarea>
+    <button onmouseup="stop()" onmousedown="up()">上翻</button>
+    <button onmousedown="down()" onmouseup="stop()">下翻</button>
+</body>
+<script>
+    var Timer = null;
+
+    function up() {
+        myTxt.scrollUp += 20 + "px"; //调用滚动条，实现上翻
+        timer = setTimeout("up()", 100)
+    }
+
+    function down() {
+        myTxt.scrollDown += 20 + "px"; //实现下翻
+        Timer = setTimeout("down()", 100);
+    }
+
+    function stop() {
+        clearTimeout(Timer) //清空定时器
+    }
+</script>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    var arr = new Array(12, 5, 8, 4);
+    var arr2 = new Array(44, 6, 5, 4, 5, 66, 8, 9);
+    //arr1.sum = function()
+    Array.prototype.sum = function() {
+            var res = 0;
+            var i = 0;
+            for (i = 0; i < this.length; i++) {
+                res += this[i];
+            }
+            return res;
+        }
+        /*
+         *
+         * alert(arr1.sum());
+         * alert(arr2.sum());
+         *
+         */
+    alert(arr.sum());
+    alert(arr2.sum());
+    alert(arr.sum == arr2.sum);
+</script>
+
+</html>
