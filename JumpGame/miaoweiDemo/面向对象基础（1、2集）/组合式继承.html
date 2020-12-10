@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组合继承</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //  原型如何实现继承？class如何实现继承？class本质是什么？
+    // function Parent(value) {
+    //     this.val = value;
+    // }
+    // Parent.prototype.getValue = function() {
+    //         console.log(this.val)
+    //     }
+    //     //子类
+    // function Child(value) {
+    //     Parent.call(this, value)
+    // }
+    // Child.prototype = new Parent(); //将原型this指向父类
+
+    // const child = new Child(1); //调用构造方法
+
+    // child.getValue();
+    // console.log(child instanceof Parent);
+    // console.log(typeof Child);
+    // console.log(typeof Parent)
+    //class 继承
+    class Parent {
+        constructor(value) {
+            this.val = value;
+        }
+        getValue() {
+            console.log(this.val);
+        }
+    }
+    class Child extends Parent {
+        constructor(value) {
+            super(value);
+            this.val = value;
+        }
+    }
+
+    let child = new Child(121);
+    child.getValue();
+    console.log(child instanceof Parent);
+</script>
+
+</html>
