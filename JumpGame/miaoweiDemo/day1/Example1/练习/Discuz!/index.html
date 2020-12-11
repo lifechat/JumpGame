@@ -534,14 +534,15 @@
 </body>
 <script>
     window.onload = function() {
-        var oMessage = document.getElementById('message');
-        var aDiv = oMessage.getElementsByTagName('div');
-        var aUserInfo = [];
-        var aImg = [];
-        var aTimer = [];
+        var oMessage = document.getElementById('message'); //获取父容器
+        var aDiv = oMessage.getElementsByTagName('div'); //获取所有div的tag
+        var aUserInfo = []; //用户栏目信息
+        var aImg = []; //存储头像
+        var aTimer = []; //防抖
         var i = 0;
-
+        // 循环遍历父容器下面的所有div
         for (i = 0; i < aDiv.length; i++) {
+            // 对类名进行判别将对应展示的信息存入到数组当中
             switch (aDiv[i].className) {
                 case 'user_info':
                     aUserInfo.push(aDiv[i]);
@@ -551,16 +552,17 @@
                     break;
             }
         }
-        // 判断移入移除
+        //将要加事件的图片循环遍历，进行防抖：多次执行变为只执行一次。节流：将多次执行的事件每隔一段事件进行执行
         for (i = 0; i < aImg.length; i++) {
             aImg[i].miaovIndex = i;
+            // 添加移入事件
             aImg[i].onmouseover = function() {
-                if (aTimer[this.miaovIndex]) {
-                    clearTimeout(aTimer[this.miaovIndex]);
+                    if (aTimer[this.miaovIndex]) {
+                        clearTimeout(aTimer[this.miaovIndex]);
+                    }
+                    aUserInfo[this.miaovIndex].style.display = 'block';
                 }
-                aUserInfo[this.miaovIndex].style.display = 'block';
-            };
-
+                //添加移除事件
             aUserInfo[i].miaovIndex = i;
             aUserInfo[i].onmouseover = function() {
                 if (aTimer[this.miaovIndex]) {
@@ -568,17 +570,15 @@
                 }
                 aUserInfo[this.miaovIndex].style.display = 'block';
             };
-
+            // 当鼠标从userinfo划出触发事件儿
             aUserInfo[i].onmouseout = function() {
-                var index = this.miaovIndex;
-                aTimer[this.miaovIndex] = setTimeout(
-                    function() {
-                        aUserInfo[index].style.display = 'none';
-                        aTimer[index] = null;
-                    }, 10
-                );
-            };
-            aTimer[i] = null;
+                let index = this.miaovIndex;
+                aTimer[this.miaovIndex] = setTimeout(() => {
+                    aUserInfo[index].style.display = 'none';
+                    aTimer[index] = null;
+                }, 10);
+                aTimer[i] = null;
+            }
         }
     };
 </script>
