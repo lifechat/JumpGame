@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>指令</title>
+</head>
+<script src="../node_modules/vue/dist/vue.js"></script>
+
+<body>
+    <div id="app"></div>
+    <script>
+        new Vue({
+            //    el：发生行为的目的地
+            el: '#app',
+            //    template：装载的模版
+            template: `
+            <div>
+                <span v-html="MyText"></span>
+                <hr/>
+                <div v-text="myInnerHtml"><h1>大家好</h1></div>
+
+                <button v-if="num == 1">测试v-if</button>
+                <button v-else-if="num == 2">测试v-else-if</button>
+                <button v-else>测试v-else</button>
+                <button v-show="isShow">v-show</button>
+            </div>
+            `,
+            data() {
+                return {
+                    MyText: '我是v-text的值！',
+                    myInnerHtml: '我是V-HTML的值',
+                    isExit: false,
+                    num: 2,
+                    isShow: true
+                }
+            },
+        })
+    </script>
+</body>
+
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>指令</title>
+</head>
+<script src="../node_modules/vue/dist/vue.js"></script>
+
+<body>
+    <div id="app"></div>
+    <script>
+        new Vue({
+            //    el：发生行为的目的地
+            el: '#app',
+            //    template：装载的模版
+            template: `
+            <div>
+               <input type="text" v-model="myValue"/>
+                <hr/>
+                <button v-show=" myValue == 'xxx'">用户输入的是xxxx</button>
+               </div>
+            `,
+            data() {
+                return {
+                    myValue: '哈哈呵呵嘻嘻'
+                }
+            },
+        })
+    </script>
+</body>
+
+
+</html>

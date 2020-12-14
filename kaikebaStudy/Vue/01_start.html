@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="../node_modules/vue/dist/vue.js"></script>
+
+<body>
+    <div id="app"></div>
+    <script>
+        new Vue({
+            //    el：发生行为的目的地
+            el: '#app',
+            //    template：装载的模版
+            template: '<div><h1>大家好,{{text}}</h1></div>',
+            data() {
+                return {
+                    text: 'hello vue'
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
