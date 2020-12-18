@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    li {
+        list-style: none;
+        float: left;
+        width: 33%;
+        background-color: greenyellow;
+        border: 1px solid #ccc;
+        height: 150px;
+    }
+</style>
+
+<body>
+    <div id="app"></div>
+
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <!-- 引入vue-router 包 -->
+    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        var Login = {
+            template: `<div>我是登录页面</div>`
+        };
+        var register = {
+            template: `<div>我是注册页面</div>`
+        };
+        //创建一个路由对象
+        Vue.use(VueRouter);
+        //配置路由对象
+        let router = new VueRouter({
+            // 配置路由对象
+            routes: [{
+                name: 'login',
+                path: '/login',
+                component: Login
+            }, {
+                name: 'register',
+                path: '/register',
+                component: register
+            }]
+        });
+        //安装对应插件
+        //将配置好的路由对象关联到vue实例中
+        //指定路由改变局部的位置
+        let App = {
+                template: `
+                <div>
+                    <router-link to="/login">登录去</router-link>
+                    <router-link to="/register">注册去</router-link>
+                    <router-view></router-view>
+                </div>
+            `
+            }
+            // $属性：$refs 获取组件内的元素，$parent:获取当前组件对象的父组件，$children 获取子组件，$root:获取new Vue实例，$el 组件dom对象
+        new Vue({
+            el: "#app",
+            components: {
+                'app': App
+            },
+            router: router,
+            template: '<app/>', //入口组件
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+
+            },
+        })
+    </script>
+</body>
+
+</html>

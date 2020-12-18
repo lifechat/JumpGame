@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    li {
+        list-style: none;
+        float: left;
+        width: 33%;
+        background-color: greenyellow;
+        border: 1px solid #ccc;
+        height: 150px;
+    }
+</style>
+
+<body>
+    <div id="app"></div>
+
+    <script src="../node_modules/vue/dist/vue.js"></script>
+
+    <script>
+        let Test = {
+            template: `
+                <div>
+                    我是test组件 {{text}}
+                    <button @click="text=text+1;">更改</button>
+                </div>
+            `,
+            data() {
+                return {
+                    text: "hello world"
+                }
+            },
+            beforeCreate() {
+                //    组件创建之前
+                console.log("beforeCreate");
+            },
+            created() {
+                //组件创建之后
+                console.log("created");
+                // 使用该组件，就会触发以上的事件函数(钩子函数)
+                // created中可以操作数据。。。并且可以实现vue->页面的影响，应用发起ajax请求，同axios来实现接口数据渲染
+
+            },
+            beforeMount() {
+                //vue 起作用，装载vue数据到dom之前
+                console.log("beforeMount");
+            },
+            mounted() {
+                console.log("mounted")
+            },
+            beforeUpdate() {
+                console.log("beforeupdate")
+            },
+            updated() {
+                console.log("updated")
+
+            },
+            activated() {
+                console.log("组件被激活了")
+            },
+            deactivated() {
+                console.log("组件被停用了")
+            },
+            beforeDestroy() {
+                console.log("beforeDestroy")
+            },
+            destroyed() {
+                console.log("destroyed")
+            },
+        }
+        let App = {
+            components: {
+                test: Test
+            },
+            data() {
+                return {
+                    isExist: true
+                }
+            },
+            template: `
+            <div>
+                <keep-alive>
+              <test v-if="isExist"></test>
+            </keep-alive>
+            <button @click="isExist = !isExist">
+                事关子组件生死
+            </button>
+            </div>
+            `
+        };
+
+        new Vue({
+                el: "#app",
+                components: {
+                    'app': App
+                },
+                template: '<app/>', //入口组件
+                data() {
+                    return {
+
+                    }
+                },
+                methods: {
+
+                },
+            })
+            // 1.生出子，声明子，使用子
+    </script>
+</body>
+
+</html>

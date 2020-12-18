@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="../node_modules/vue/dist/vue.js"></script>
+
+    <script>
+        let MyHeader = {
+                template: '<div>我是头部</div>'
+            }
+            //函数调用创建组件
+        let MyBody = Vue.extend({
+                template: '<div>我是body部分</div>'
+            })
+            // 语法糖
+            // let MyBody = {
+            //     template: '<div>我是body部分</div>'
+            // }
+        let MyFooter = {
+            template: `
+            <div>
+                我是MyFooter部分<br/>
+                <button @click="showNum(123)">点我</button>
+            </div>
+            `,
+            methods: {
+                showNum(num) {
+                    alert(num);
+                }
+            },
+        }
+        let App = {
+            components: {
+                'my-header': MyHeader,
+                'my-body': MyBody,
+                'my-footer': MyFooter
+            },
+            template: `
+            <div>
+               <my-header/>
+               <my-body/>
+               <my-footer/>
+            </div>
+            `
+        };
+
+        new Vue({
+                el: "#app",
+                components: {
+                    'app': App
+                },
+                template: '<app/>', //入口组件
+                data() {
+                    return {
+
+                    }
+                },
+                methods: {
+
+                },
+            })
+            // 1.生出子，声明子，使用子
+    </script>
+</body>
+
+</html>

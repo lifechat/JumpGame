@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="../node_modules/vue/dist/vue.js"></script>
+
+    <script>
+        // 1、过滤器可以给数据显示进行过滤，展示你想要的数据
+        //需求:将输入的文本abc... 反转为..cba
+        //通过input+v-model来获取数据到vue中  输出｛｛内容|使用过滤器输出｝｝
+        // Vue.component('my-btn', {
+        //     template: `
+        //     <button style="background:green">漂亮的按钮</button>
+        //     `
+        // })
+        // var MyHeader = {
+        //     template: `
+        //         <div>
+        //         我是header组件
+        //         <my-btn/>
+        //         </div>
+        //         `
+        // }
+        // var MyFooter = {
+        //     template: `
+        //         <div>
+        //         我是MyFooter组件
+        //         <my-btn/>
+        //         </div>
+        //         `
+        // }
+        var App = {
+            template: `
+                <div>
+                  <input type="text" v-model="myText" />
+                  {{myText | reverse}}
+                </div>
+            `,
+            data() {
+                return {
+                    myText: ''
+                }
+            },
+            //局部过滤器，组件过滤
+            filters: {
+                reverse(datastr) { //参数1就是传递的源数据
+                    return datastr.split('').reverse().join(); //过滤的内容就是显示内容
+                }
+            }
+        }
+        new Vue({
+                el: "#app",
+                components: {
+                    'app': App
+                },
+                template: '<app/>', //入口组件
+                data() {
+                    return {
+
+                    }
+                },
+                methods: {
+
+                },
+            })
+            // 1.生出子，声明子，使用子
+    </script>
+</body>
+
+</html>

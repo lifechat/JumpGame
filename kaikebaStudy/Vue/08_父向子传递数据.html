@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="../node_modules/vue/dist/vue.js"></script>
+
+    <script>
+        let Son = {
+            template: `
+                <div>
+                    接受到父组件的数据是：{{title}}
+                    <h1 v-if="xxx">1</h1>
+                    <h1 v-show="xxx">2</h1>
+                    <ul>
+                        <li v-for="(value,key,index) in stu">
+                            {{index}}---{{key}}---{{value}}
+                        <li/>
+                    </ul>
+                    <button @click="changeXxx">改变现实</button>
+                    <hr/>
+                    单向数据流(vur->html):
+                    <input type="text" :value="text"/><br/>
+                    双向数据流(vue->html0>vue)
+                    <input type="text" v-model="text"/>
+                    <h1>主要看这里…………………………………………</h1>
+                    {{text}}
+                </div>`,
+            //声明接受参数
+            data() {
+                return {
+                    xxx: true,
+                    stu: {
+                        name: '张三',
+                        age: 18,
+                        score: 90
+                    },
+                    text: "测试文本"
+                }
+            },
+            methods: {
+                changeXxx() {
+                    this.xxx = !this.xxx;
+                }
+            },
+            props: ['title'],
+
+        }
+        let App = {
+            components: {
+                son: Son
+            },
+            template: `
+            <div>
+                <son :title="xxx"/>
+            </div>
+           `,
+            data() {
+                return {
+                    xxx: "我是父组件数据xxx"
+                }
+            },
+            methods: {
+
+            },
+        }
+        new Vue({
+                el: "#app",
+                components: {
+                    'app': App
+                },
+                template: '<app/>', //入口组件
+                data() {
+                    return {
+
+                    }
+                },
+                methods: {
+
+                },
+            })
+            // 1.生出子，声明子，使用子
+    </script>
+</body>
+
+</html>

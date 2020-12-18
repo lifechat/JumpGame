@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="../node_modules/vue/dist/vue.js"></script>
+
+    <script>
+        // 注册全局组件
+        Vue.component('my-btn', {
+            template: `
+            <button style="background:green">漂亮的按钮</button>
+            `
+        })
+        var MyHeader = {
+            template: `
+                <div>
+                我是header组件
+                <my-btn/>
+                </div>
+                `
+        }
+        var MyFooter = {
+            template: `
+                <div>
+                我是MyFooter组件
+                <my-btn/>
+                </div>
+                `
+        }
+        var App = {
+            components: {
+                'my-header': MyHeader,
+                'my-footer': MyFooter
+            },
+            template: `
+                <div>
+                    <my-header/>  
+                    <my-footer/>  
+                    </hr>
+                    全局组件显示
+                    <my-btn/>
+                </div>
+            `
+        }
+        new Vue({
+                el: "#app",
+                components: {
+                    'app': App
+                },
+                template: '<app/>', //入口组件
+                data() {
+                    return {
+
+                    }
+                },
+                methods: {
+
+                },
+            })
+            // 1.生出子，声明子，使用子
+    </script>
+</body>
+
+</html>

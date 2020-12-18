@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    li {
+        list-style: none;
+        float: left;
+        width: 33%;
+        background-color: greenyellow;
+        border: 1px solid #ccc;
+        height: 150px;
+    }
+</style>
+
+<body>
+    <div id="app"></div>
+
+    <script src="../node_modules/vue/dist/vue.js"></script>
+
+    <script>
+        //slot 是留坑，外部填入html
+        // 总结一点:slot其实就是父组件传递的dom结构，vue内置提供的组件<slot></slot>
+        let MySlot = {
+            template: `<li>
+                以下预留第1个坑
+            <slot name="one"></slot>                
+            <hr/>
+            以下预留第2个坑
+            <slot name="two"></slot>
+            </li>`
+        }
+        Vue.component('my-slot', MySlot)
+
+        let App = {
+            template: `
+            <div>
+                <my-slot>
+                    <h1 slot="two">以下预留第1个坑</h1>
+                    <hr/>
+                    <h1 slot="one">以下预留第2个坑</h1>
+                </my-slot>
+            </div>
+            `
+        };
+
+        new Vue({
+                el: "#app",
+                components: {
+                    'app': App
+                },
+                template: '<app/>', //入口组件
+                data() {
+                    return {
+
+                    }
+                },
+                methods: {
+
+                },
+            })
+            // 1.生出子，声明子，使用子
+    </script>
+</body>
+
+</html>
