@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="jL">节流</button>
+    <button id="fd">防抖</button>
+</body>
+<script>
+    /**
+                      * 节流throttle
+                    * 防抖debounce区别
+                        首先了解一节流和防抖的区别，然后才好根据我们的需求，进行选择：
+                         节流：
+                          间隔时间之后才可以执行，中间无效。在时间段之内继续操作，停止时间段内的操作执行，过了时间段才可以继续操作。
+                        eg:射击游戏开枪的间隔，第一次是直接能开枪的，然后之后不管鼠标点击多少次，只有过了间隔时间才可以开枪，之间的都是无效操作。
+                        防抖： 
+                         时间段内执行最后一次操作。在时间端内继续操作，会停止之前没执行完的操作，并执行最新操作。
+                         可能用到的地方：
+                         频繁触发的事件：文本框输入、window.resize窗口size改变、页面scroll滚动事件
+                         * 
+                         * **/
+    //控制评率开关  
+    var Flag = true;
+    // 是否是首次
+    var nowDate = true;
+    // 节流throttle
+    function throttle(callback, time) {
+        if (!Flag) return;
+        Flag = false;
+        if (!nowDate) {
+            setTimeout(() => {
+                callback();
+                Flag = true;
+            }, time);
+        } else {
+            callback();
+            //首次执行结束之后，设置变量非首次
+            nowDate = false;
+            Flag = true;
+        }
+    };
+    // 需要节流的操作
+    function fn() {
+        console.log("节流")
+    }
+
+
+    // 防抖 清除定时器
+    var timer;
+
+    function debounce(callback, time) {
+        clearTimeout(timer);
+        timer = setTimeout(callback, time)
+    }
+
+    function fn1() {
+        console.log("防抖")
+    }
+    document.querySelector("#jL").onclick = function() {
+        console.log("========鼠标点击=======");
+        throttle(fn, 3000)
+    }
+    document.querySelector('#fd').onclick = function() {
+        console.log(123)
+        debounce(fn1, 1500)
+    }
+</script>
+
+</html>
