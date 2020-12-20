@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    li {
+        list-style: none;
+        float: left;
+        width: 33%;
+        background-color: greenyellow;
+        border: 1px solid #ccc;
+        height: 150px;
+    }
+</style>
+
+<body>
+    <div id="app"></div>
+
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <!-- 引入vue-router 包 -->
+    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        // router-view 包含router-view
+        // 
+        let isLogin = false;
+        var Woman = {
+            template: `
+              <div>欢迎女性进行登录</div>
+            `
+        }
+        var Man = {
+            template: `
+              <div>欢迎男性进行登录</div>
+            `
+        }
+        var Login = {
+            template: `<div>
+            我是login内容，下面是子路由显示的内容
+            <router-view></router-view></div>`,
+            created() {
+                isLogin = true
+            },
+        };
+        var Music = {
+            template: `<div>
+                我是music内容，下面是子路由显示的内容
+            <router-view></router-view></div>`,
+            created() {},
+        };
+        //创建一个路由对象
+        Vue.use(VueRouter);
+        //配置路由对象
+        let router = new VueRouter();
+        router.addRoutes([
+            // 配置路由对象
+            {
+                path: '/',
+                redirect: {
+                    name: 'login'
+                }
+            }, {
+                name: 'login',
+                path: '/login',
+                component: Login,
+            }, {
+                name: 'music',
+                path: '/music',
+                component: Music,
+                meta: {
+                    isChecked: true
+                }
+            }
+        ])
+
+        router.beforeEach((to, from, next) => {
+                console.log(to);
+
+                console.log(from);
+                if (!to.meta.isChecked) {
+                    next();
+                } else {
+                    if (isLogin) {
+                        next();
+                    } else {
+                        alert("请先登录，在听音乐")
+                        next({
+                            name: "login"
+                        });
+                    }
+                }
+
+            })
+            //安装对应插件
+            //将配置好的路由对象关联到vue实例中
+            //指定路由改变局部的位置
+        let App = {
+                template: `
+                <div>
+                    <router-link :to="{name:'login'}">去登陆</router-link>
+                    <router-link :to="{name:'music'}">去听歌</router-link>
+                    <router-view></router-view>
+                </div>
+            `
+            }
+            // $属性：$refs 获取组件内的元素，$parent:获取当前组件对象的父组件，$children 获取子组件，$root:获取new Vue实例，$el 组件dom对象
+        new Vue({
+            el: "#app",
+            components: {
+                'app': App
+            },
+            router: router,
+            template: '<app/>', //入口组件
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+
+            },
+        })
+    </script>
+</body>
+
+</html>

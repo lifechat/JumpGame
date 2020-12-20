@@ -1,0 +1,22 @@
+{
+    "name": "webpackDay",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "dev": "webpack --config ./webpack.dev.config.js",
+        "prod": "webpack --config ./webpack.prod.config.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "css-loader": "^0.28.11",
+        "file-loader": "^1.1.11",
+        "less": "^3.0.4",
+        "less-loader": "^4.1.0",
+        "style-loader": "^0.21.0",
+        "url-loader": "^1.0.1",
+        "webpack": "^3.6.0"
+    }
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/axios/dist/axios.js"></script>
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <style>
+        li {
+            list-style: none;
+            float: left;
+            width: 33%;
+            background-color: greenyellow;
+            border: 1px solid #ccc;
+            height: 150px;
+        }
+    </style>
+
+    <body>
+        <div id="app"></div>
+
+        <script src="../node_modules/vue/dist/vue.js"></script>
+        <!-- 引入vue-router 包 -->
+        <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+        <script>
+            //安装对应插件
+            //将配置好的路由对象关联到vue实例中
+            //指定路由改变局部的位置
+            let App = {
+                    template: `
+                <div>
+                响应1：{{res1}}
+                响应2：{{res2}}
+                   <button @click= "sendAjax">获取cookie</button>
+                   <button @click= "sendAjax">携带cookie</button>
+                </div>
+            `,
+                    data() {
+                        return {
+                            res1: '',
+                            res2: ''
+                        }
+                    },
+                    methods: {
+                        sendAjax() {
+                            // 配置公共数据
+                            this.$axios.defaults.baseURL = "http://pintuan.kcode.top";
+
+                            this.$axios.headers = {};
+                            this.$axios.headers.accept = 'abc';
+                            this.$axios.get('', {
+                                    params: {
+                                        id: 1
+                                    }
+                                })
+                                .then(res => {
+                                    console.log(res)
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                });
+                            //请求2
+                            this.$axios.post('add', 'name=jack')
+                                .then(res => {
+
+                                })
+                                .catch(err => {
+
+                                })
+                        }
+                        // 
+                    },
+                }
+                // $属性：$refs 获取组件内的元素，$parent:获取当前组件对象的父组件，$children 获取子组件，$root:获取new Vue实例，$el 组件dom对象
+                // 组件内的每一个this对象，都是vue的孩子
+                //vue祖宗的原型数据，都会共享给所有的孩子
+            Vue.prototype.$axios = axios;
+            new Vue({
+                el: "#app",
+                components: {
+                    'app': App
+                },
+                template: '<app/>', //入口组件
+                data() {
+                    return {
+
+                    }
+                },
+                methods: {
+
+                },
+            })
+        </script>
+    </body>
+
+    </html>
+</body>
+
+</html>
