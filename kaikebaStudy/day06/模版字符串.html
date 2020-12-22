@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //模版字符串就是一种字符串的新的表现形式
+
+    // 基本用法
+    let s1 = `hello`
+    let s2 = 'hello'
+
+    // b模版字符串解决了一些痛点
+    // +字符串和变量拼凑
+    let s3 = "a" + s1 + "b" + s2;
+    let s4 = `a${s1}b${s2}`;
+
+    //字符串换行
+    let s5 = `
+        <div>
+            <p>
+                <span>123</span>
+            </p>
+            <p>${s2}</p>
+            <p>${s3}</p>
+            <p>${s1}</p>
+        </div>
+    `;
+    console.log(s5)
+</script>
+
+</html>

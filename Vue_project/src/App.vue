@@ -3,22 +3,22 @@
     <mt-header  title="魔晶商城"></mt-header>
         首次写项目{{msg}}
 
-       <router-view/>
+        <router-view></router-view>
 
       <mt-tabbar v-model="selected">
-              <mt-tab-item id="home">
+              <mt-tab-item id="Home">
                 <img slot="icon" src="./assets/img/index.png">
                 首页
               </mt-tab-item>
-              <mt-tab-item id="member">
+              <mt-tab-item id="Member">
                 <img slot="icon" src="./assets/img/vip.png">
                 会员
               </mt-tab-item>
-              <mt-tab-item id="shopcar">
+              <mt-tab-item id="Shopcar">
                 <img slot="icon" src="./assets/img/shopcart.png">
                 购物车
               </mt-tab-item>
-              <mt-tab-item id="search">
+              <mt-tab-item id="Search">
                 <img slot="icon" src="./assets/img/search.png">
                 查找
               </mt-tab-item>

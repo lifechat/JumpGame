@@ -5,10 +5,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BFC详解叙述</title>
+    <title>防止margin重叠</title>
 </head>
+<style>
+    body {
+        width: 100%;
+        position: relative;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    p {
+        color: #f55;
+        background: yellow;
+        width: 200px;
+        line-height: 100px;
+        text-align: center;
+        margin: 30px;
+    }
+    
+    .per {
+        border: 5px solid rgb(91, 243, 30);
+        width: 300px;
+        overflow: hidden;
+    }
+    
+    .child {
+        border: 5px solid rgb(233, 250, 84);
+        width: 100px;
+        height: 100px;
+        float: left;
+    }
+</style>
 
 <body>
+    <!-- <p>看看我的 margin是多少</p>
+    <div>
+        <p>看看我的 margin是多少</p>
+    </div> -->
 
+    <div class="per">
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
 </body>
+<script>
+    // 从1-5 从 5-1   每秒一次递减递增
+    function test2() {
+        for (let n = 1; n <= 5; n++) {
+            setTimeout(function() {
+                console.log("test2:" + n);
+            }, 1000);
+        }
+
+    }
+    test2()
+
+    function showNum(num) {
+        let t = setInterval(function() {
+            num--;
+            console.log("test3:" + num);
+            if (num <= 0) {
+                clearInterval(t)
+            }
+        }, 3000);
+    }
+    showNum(5)
+</script>
 
 </html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    function f() {
+        console.log(this.name);
+    }
+    let obj = {
+        name: "Messi",
+        f: f
+    };
+    obj.f();
+    // 3.new 指向这个新对象。
+    function Person(name) {
+        this.name = name;
+        console.log(name);
+    }
+    let person1 = new Person("Messia")
+        // 4.箭头函数的this指向哪里？
+    const obj1 = {
+        name: "jack",
+        getArrow() {
+            return () => {
+                console.log(this === obj);
+                console.log(this.name)
+            }
+        }
+    }
+    obj1.getArrow();
+
+    // ES5，由 Babel 转译
+    var obj = {
+        getArrow: function getArrow() {
+            var _this = this;
+            return function() {
+                console.log(_this === obj);
+            };
+        }
+    };
+</script>
+
+</html>

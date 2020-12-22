@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    function fn(name) {
+        this.name = name;
+    }
+    // 通过new关键字来调用的，那么这种方式就是构造函数的构造函数的调用方式，那么函数内部的this就是该构造函数的实例
+
+    var _n = new fn("小明");
+
+    // 2.
+    function jQuery() {
+        return new jQuery.prototype.init();
+    }
+    jQuery.prototype = {
+        constructor: jQuery,
+        length: 100,
+        init() {
+            // this 可以访问到实例本身的属性，也可以访问到
+            console.log(this.length);
+        }
+    }
+</script>
+
+</html>

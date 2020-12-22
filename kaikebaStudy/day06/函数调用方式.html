@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // 函数调用
+    var age = 18;
+    var p = {
+        age: 15,
+        say() {
+            console.log(this.age)
+        }
+    }
+    var f1 = p.say;
+    f1();
+    // 构造函数调用
+    function Person(name) {
+        this.name = name;
+    }
+    Person.prototype = {
+        constructor: Person,
+        say() {
+            console.log(this.name)
+        }
+    }
+</script>
+
+</html>

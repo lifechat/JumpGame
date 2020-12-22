@@ -12,17 +12,18 @@
 </body>
 <script>
     /**
-     * 1.var声明的变量会挂载在window上，而let和const声明的变量不会
+                                                                                                                                                             * 1.var声明的变量会挂载在window上，而let和const声明的变量不会
 
-    2.var声明变量存在变量提升，let和const不存在变量提升
+                                                                                                                                                            2.var声明变量存在变量提升，let和const不存在变量提升
 
-    3.let和const声明形成块作用域
+                                                                                                                                                            3.let和const声明形成块作用域
 
-    4.同一作用域下let和const不能声明同名变量，而var可以
+                                                                                                                                                            4.同一作用域下let和const不能声明同名变量，而var可以
 
-    5.const一旦声明必须赋值,不能使用null占位；声明后不能再修改 ；如果声明的是复合类型数据，可以修改其属性
-     * 
-    */
+                                                                                                                                                            5.const一旦声明必须赋值,不能使用null占位；声明后不能再修改 ；如果声明的是复合类型数据，可以修改其属性
+                                                                                                                                                             * 
+                                                                                                                                                            */
+    //    考点 let 和 var 声明的作用域
     var a = [];
     var b = [];
     for (var i = 0; i < 10; i++) {
@@ -37,6 +38,71 @@
     }
     a[2]();
     b[2]();
+    // slice 的用法
+    let month = ['Jan', 'March', 'April', 'June'];
+    let res = month.splice(2, 1);
+    console.log(month, res);
+
+
+    // promise 执行顺序
+    setTimeout(() => {
+        console.log("A");
+    }, 0);
+    var obj = {
+        func() {
+            setTimeout(() => {
+                console.log("B")
+            }, 0);
+            return new Promise((resolve) => {
+                console.log("C")
+                resolve();
+            })
+        }
+    };
+    obj.func().then(() => {
+        console.log("D")
+    })
+    console.log("E")
+
+
+    var name = '深圳';
+    var cat = {
+        eat1: {
+            name: '吃鱼',
+            eat2() {
+                console.log(this.name)
+                console.log(this)
+            }
+        }
+    }
+    cat.eat1.eat2();
+
+
+    var a = !![]
+    var c = ![];
+    var d = !{};
+    var b = !!{};
+    console.log(a, b);
+    console.log(c, d)
+
+
+    var point = {
+        x: 0,
+        y: 0,
+        moveTo: function(x, y) {
+            let moveX = (x) => {
+                this.x = x;
+            }
+
+            let moveY = (y) => {
+                this.y = y;
+            }
+            moveX(x);
+            moveY(y);
+        }
+    };
+    point.moveTo(1, 1);
+    console.log(point.x, point.y);
 </script>
 
 </html>

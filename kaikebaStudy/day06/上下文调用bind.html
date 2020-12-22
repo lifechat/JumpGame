@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    var obj = {
+        age: 18,
+        run: function() {
+
+            var _that = this;
+
+            setTimeout(function() {
+                //this指向window
+                console.log(this.age);
+                console.log(_that.age);
+                //18？是错误的
+                //undefined是正确的
+            }, 50);
+        }
+    }
+
+    obj.run();
+
+
+    var obj5 = {
+        age: 18,
+        run() {
+            var _that = this;
+            console.log("obj5", this);
+            setTimeout(
+                (function() {
+                    console.log(this.age);
+                    console.log(_that.age)
+                })
+                .bind(this), 50);
+        }
+    }
+    obj5.run();
+
+    // bind基本用法
+    function speed() {
+        console.log(this.seconds);
+    }
+    // 执行了bind方法之后，产生了一个新函数，这个和原来的逻辑基本大致雷同
+    var speedBind = speed.bind({
+        seconds: 100
+    });
+    speedBind();
+
+    (function eat() {
+        console.log(this.seconds);
+    }).bind({
+        seconds: 360
+    })();
+
+    var obj = {
+        name: "西瓜",
+        drink: (function() {
+            console.log(this.name)
+        }).bind({
+            name: "橙汁"
+        })
+    }
+    obj.drink();
+
+    p10 = {
+        height: 88,
+        run() {
+            setInterval((function() {
+                console.log(this.height);
+            }).bind(this), 3000);
+        }
+    }
+    p10.run();
+</script>
+
+</html>
