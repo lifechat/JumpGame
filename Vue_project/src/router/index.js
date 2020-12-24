@@ -5,6 +5,8 @@ import Member from '@/components/Member/Member'
 import Search from '@/components/Search/Search'
 import Shopcar from '@/components/Shopcar/Shopcar'
 import NewsList from '@/components/News/NewsList'
+import NewsDetail from '@/components/News/NewsDetail'
+import PhotoList from '@/components/Photo/PhotoList'
 
 Vue.use(Router)
 const originalPush = Router.prototype.push
@@ -37,6 +39,15 @@ export default new Router({
             name: 'news.list',
             path: '/news/list',
             component: NewsList
+        },
+        {
+            name: "news.detail",
+            path: '/news/detail',
+            components: NewsDetail
+        }, {
+            name: 'photo.list',
+            path: '/photo/list/:categoryId',
+            component: PhotoList
         }
     ]
 })

@@ -5,7 +5,7 @@
     <div class="demo">
        <ul>
           <li v-for="news in newsList" :key="news.id">
-               <a href="#">
+               <router-link :to="{name:'news.detail',query:{id:news.id}}">
                   <img :src="news.slider_image" alt="">
                   <div class="content">
                      <span>{{news.title}}</span>
@@ -14,7 +14,7 @@
                         <p>发表时间:{{news.add_time| convertTime('YYYY-MM-DD')}}</p>
                      </div>
                   </div>
-               </a>
+               </router-link>
           </li>
        </ul>
     </div>

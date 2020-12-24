@@ -43,7 +43,8 @@ export default {
                     className: "cms-news",
                     title: '图文分享',
                     router:{
-                        name:'news.list'
+                        name:'photo.list',
+                        params:{categoryId:0}
                     }
                 },
                 {
