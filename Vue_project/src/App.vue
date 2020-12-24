@@ -1,11 +1,9 @@
 <template>
   <div>
     <mt-header  title="魔晶商城"></mt-header>
-        首次写项目{{msg}}
+      <router-view></router-view>
 
-        <router-view></router-view>
-
-      <mt-tabbar v-model="selected">
+      <mt-tabbar  v-model="selected" >
               <mt-tab-item id="Home">
                 <img slot="icon" src="./assets/img/index.png">
                 首页
@@ -30,7 +28,6 @@ export default {
     data() {
       return {
         selected:"",
-        msg:"我是你爸爸"
       }
     },
     watch:{
@@ -44,5 +41,4 @@ export default {
 }
 </script>
 <style>
-    body{margin: 0;}
 </style>
