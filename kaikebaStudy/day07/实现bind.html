@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实现bind</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // bind 方法
+    //1所有函数访问
+    // 所有函数对象的构造函数是Function
+    //   -->Function 创建了Function
+    //   -->Function 创建了Object
+    //   -->function 创建了Fn
+    Function.prototype._bind = function(target) {
+        return (() => {
+            // 执行fn里面的逻辑
+            this.call(target);
+        })();
+    }
+
+    function fn() {
+        console.log(this)
+    }
+    fn.bind({
+        age: 18
+    })
+</script>
+
+</html>

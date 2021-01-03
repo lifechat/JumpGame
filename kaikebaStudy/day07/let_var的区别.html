@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    {
+        let a = 10;
+        var b = 8;
+    }
+    console.log(b)
+    console.log(a);
+    /***
+     * let 声明的对象只在代码块里面有效
+     * var 声明的变量可以使用
+     ***/
+    var a = [];
+    var b = [];
+    for (var i = 0; i < 10; i++) {
+        a[i] = function() {
+            console.log(i);
+        };
+    }
+    a[6]();
+
+    for (let i = 0; i < 10; i++) {
+        b[i] = function() {
+            console.log(i)
+        }
+    }
+    b[6]();
+</script>
+
+</html>

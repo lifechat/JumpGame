@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+
+<script>
+    function Bbb() {
+        var _this = this;
+        this.b = 5;
+
+        document.getElementById('btn1').onclick = function() {
+            console.log(this == _this)
+            console.log(this)
+            console.log(_this)
+            _this.show();
+        };
+    }
+    Bbb.prototype.show = function() {
+        alert(this.b)
+    }
+    window.onload = function() {
+        new Bbb();
+    };
+</script>
+<input type="button" id="btn1" value="按钮">
+
+</html>

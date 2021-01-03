@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function Person(name, sex) {
+            this.name = name;
+            this.sex = sex;
+        }
+        Person.prototype.showName = function() {
+            alert(this.name);
+        };
+        Person.prototype.showSex = function() {
+            alert(this.sex)
+        };
+        var p = new Person('blue', '男');
+
+        p.showName();
+        p.showSex();
+    </script>
+</body>
+
+</html>

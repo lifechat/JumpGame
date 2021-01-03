@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    function createPerson(name, sex) {
+        this.name = name;
+        this.sex = sex;
+
+        this.showName = function() {
+            alert("我的名字叫:" + this.name);
+        };
+        this.showSex = function() {
+            alert("我是" + this.sex + "的");
+        };
+    }
+
+    let p1 = new createPerson('blue', '男');
+    let p2 = new createPerson('leo', '女');
+
+    alert(p1.showName == p2.showName)
+</script>
+
+</html>

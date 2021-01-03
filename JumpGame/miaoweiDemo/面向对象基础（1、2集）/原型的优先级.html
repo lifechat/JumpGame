@@ -8,12 +8,21 @@
 </head>
 
 <body>
-    <script>
-        function show() {
-            alert(this);
-        }
-        show(); //window
-    </script>
+
 </body>
+<script>
+    Array.prototype.a = 12;
+
+    let arr = [1, 2, 3];
+    alert(arr.a);
+
+    arr.a = 5;
+
+    alert(arr.a);
+
+    delete arr.a;
+
+    alert(arr.a)
+</script>
 
 </html>

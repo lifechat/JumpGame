@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        /*  1使用弹性盒子实现
+        .fu {
+            height: 300px;
+            width: 400px;
+            background-color: aqua;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        } */
+        
+        .fu {
+            height: 300px;
+            width: 400px;
+            position: relative;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+            background-color: aqua;
+            margin: 0 auto;
+        }
+        
+        .zi {
+            height: 200px;
+            width: 200px;
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fu">
+        <div class="zi">
+
+        </div>
+    </div>
+</body>
+
+</html>

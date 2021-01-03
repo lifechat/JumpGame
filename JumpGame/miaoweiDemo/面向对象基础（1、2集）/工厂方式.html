@@ -8,7 +8,32 @@
 </head>
 
 <body>
+    <script>
+        function createPerson(name, sex) {
+            //原料
+            var obj = new Object();
+            // 加工
+            obj.name = name;
+            obj.sex = sex;
 
+            obj.showName = function() {
+                alert("我的名字叫：" + this.name);
+            };
+            obj.showSex = function() {
+                alert("我是" + this.sex + "的");
+            };
+            // 出厂
+            return obj;
+        }
+        var p1 = createPerson('blue', '男');
+        var p2 = createPerson('leo', '男');
+
+        alert(p1.showName == p2.showName)
+        p1.showName();
+        p1.showSex();
+        p2.showName();
+        p2.showSex();
+    </script>
 </body>
 
 </html>
