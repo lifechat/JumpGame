@@ -10,6 +10,7 @@
     "license": "ISC",
     "dependencies": {
         "axios": "^0.21.0",
+        "element-ui": "^2.15.0",
         "vue": "^2.6.12",
         "vue-router": "^3.4.9"
     }

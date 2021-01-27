@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    function fn1() {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                console.log("第一步")
+
+                resolve();
+            }, 1000);
+        })
+    }
+
+    // var promise = new Promise((resolve, reject) => {
+    //     $.get("/getUser", res => {
+    //         resolve(res);
+    //     })
+    // })
+    // promise.then(res => {
+    //     console.log(res)
+    // })
+
+    function fn2() {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                console.log("第二步")
+                resolve();
+            }, 1000);
+        })
+    }
+    fn1().then(res => {
+        return fn2();
+    }).then(res => {
+        setTimeout(() => {
+            console.log("完成")
+        }, 1000)
+    })
+</script>
+
+</html>

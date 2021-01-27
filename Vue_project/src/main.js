@@ -8,13 +8,20 @@ import MintUI from 'mint-ui'
 // 引入css
 import 'mint-ui/lib/style.css'
 import './assets/css/global.css'
+import 'element-ui/lib/theme-chalk/index.css'
 
 import MyUl from '@/components/Common/MyUl'
 import MyLi from '@/components/Common/MyLi'
 import NavBar from '@/components/Common/NavBar'
 
+import ElementUI from 'element-ui'
+
+
+
 // moment 全局日期过滤器
 import Moment from 'moment'
+
+
 
 Vue.filter('convertTime', (data, formatstr) => {
     return Moment(data).format(formatstr)
@@ -25,7 +32,7 @@ Vue.component(MyLi.name, MyLi)
 Vue.component(NavBar.name, NavBar)
     // 安装插件，注册全局组件及挂载属性
 
-
+Vue.use(ElementUI)
 Vue.use(MintUI)
 Vue.config.productionTip = false
 

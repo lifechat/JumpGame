@@ -30,6 +30,21 @@
     fn.bind({
         age: 18
     })
+
+
+    Function.prototype._bind = function(target) {
+        return () => {
+            this.call(target)
+        }
+    }
+
+    function fn1() {
+        console.log(this)
+    }
+    f1 = fn.bind({
+        name: "jack"
+    })
+    f1();
 </script>
 
 </html>

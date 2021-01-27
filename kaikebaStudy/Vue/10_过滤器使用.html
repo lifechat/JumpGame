@@ -8,7 +8,9 @@
 </head>
 
 <body>
-    <div id="app"></div>
+    <div id="app">
+        {{message | lower}}
+    </div>
 
     <script src="../node_modules/vue/dist/vue.js"></script>
 
@@ -37,34 +39,39 @@
         //         </div>
         //         `
         // }
-        var App = {
-            template: `
-                <div>
-                  <input type="text" v-model="myText" />
-                  {{myText | reverse}}
-                </div>
-            `,
-            data() {
-                return {
-                    myText: ''
-                }
-            },
-            //局部过滤器，组件过滤
-            filters: {
-                reverse(datastr) { //参数1就是传递的源数据
-                    return datastr.split('').reverse().join(); //过滤的内容就是显示内容
-                }
-            }
-        }
+        // var App = {
+        //     template: `
+        //         <div>
+        //           <input type="text" v-model="myText" />
+        //           {{myText | reverse}}
+        //         </div>
+        //     `,
+        //     data() {
+        //         return {
+        //             myText: ''
+        //         }
+        //     },
+        //     //局部过滤器，组件过滤
+        //     filters: {
+        //         reverse(datastr) { //参数1就是传递的源数据
+        //             return datastr.split('').reverse().join(); //过滤的内容就是显示内容
+        //         }
+        //     }
+        // }
         new Vue({
                 el: "#app",
-                components: {
-                    'app': App
+                // components: {
+                //     'app': App
+                // },
+                filters: {
+                    lower(value) {
+                        return value.toLowerCase()
+                    }
                 },
-                template: '<app/>', //入口组件
+                // template: '<app/>', //入口组件
                 data() {
                     return {
-
+                        message: 'Hello Vue HEHEHE'
                     }
                 },
                 methods: {

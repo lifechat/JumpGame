@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    function getBooks() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: "/getBooks",
+                success(res) {
+                    // 成功获取数据
+                    resolve(res);
+                },
+                error(res) {
+                    // 如果失败，执行error方法
+                    reject(res);
+                }
+            })
+        })
+    }
+    // getBooks().then(res => {
+    //     // res 表示请求成功时候获取到的数据
+
+    // }, resError => {
+    //     console.log(resError)
+    // })
+
+    getBooks().then(res => {
+        console.log(res)
+    }).catch(err => {
+        console.log(err)
+    })
+</script>
+
+</html>
