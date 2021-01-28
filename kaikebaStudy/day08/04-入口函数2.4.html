@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>aaa</div>
+    <div>bbb</div>
+    <div>ccc</div>
+
+    <div class="header">123</div>
+</body>
+<script>
+    (function(global) {
+        function jQuery(selector) {
+
+            return new F(selector);
+        }
+
+        function F(selector) {
+            const elements = document.getElementsByTagName(selector);
+            this.elements = elements;
+            console.log(this.elements)
+        }
+
+        F.prototype.css = function(name, value) {
+            for (let i = 0; i < this.elements.length; i++) {
+                let element = this.elements[i];
+                element.style[name] = value;
+            }
+        }
+
+        window.$ = window.jQuery = jQuery;
+    })(window)
+
+    $("div").css("color", "red")
+    $(".header").css("backgroundColor", "pink")
+    $("#inputId").css("backgroundColor", "black")
+</script>
+
+</html>
