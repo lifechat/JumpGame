@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0" />
+    <link rel="stylesheet" href="css/base.css" type="text/css">
+    <link rel="stylesheet" href="css/common.css" type="text/css">
+    <link rel="stylesheet" href="css/index.css?v=0.4" type="text/css">
+    <title>国家税务总局天津市税务局</title>
+</head>
+
+<body class="page_index">
+    <div class="page_wrap">
+        <div class="top_nav">
+            <select name="" id="selectYear" onchange="yearOnChange()">
+                <option value="2019">2019</option>
+                <option value="2020" selected>2020</option>
+            </select>
+
+            <a href="search.html" class="btn_search">搜索</a>
+            <a onclick="jumpToSort()" class="btn_sort">分类</a>
+        </div>
+        <div class="calendar">
+            <div class="calendar_head clearfix" id="months_wrap">
+                <div class="months_scroller">
+                    <span class="month_item" onclick="monthClick(1,this)">1月</span>
+                    <span class="month_item" onclick="monthClick(2,this)">2月</span>
+                    <span class="month_item" onclick="monthClick(3,this)">3月</span>
+                    <span class="month_item" onclick="monthClick(4,this)">4月</span>
+                    <span class="month_item" onclick="monthClick(5,this)">5月</span>
+                    <span class="month_item" onclick="monthClick(6,this)">6月</span>
+                    <span class="month_item" onclick="monthClick(7,this)">7月</span>
+                    <span class="month_item" onclick="monthClick(8,this)">8月</span>
+                    <span class="month_item" onclick="monthClick(9,this)">9月</span>
+                    <span class="month_item" onclick="monthClick(10,this)">10月</span>
+                    <span class="month_item" onclick="monthClick(11,this)">11月</span>
+                    <span class="month_item" onclick="monthClick(12,this)">12月</span>
+                </div>
+            </div>
+            <div class="calendar_body clearfix">
+                <div class="weekly_bar clearfix">
+                    <span class="weekday">一</span>
+                    <span class="weekday">二</span>
+                    <span class="weekday">三</span>
+                    <span class="weekday">四</span>
+                    <span class="weekday">五</span>
+                    <span class="weekday">六</span>
+                    <span class="weekday">日</span>
+                </div>
+                <div class="day_list clearfix" id="wrapSetTimeDateList">
+                    <!--
+                <span class="day" data="1">1</span>
+                <span class="day" data="2">2</span>
+                <span class="day" data="3">3</span>
+                ......
+                <span class="day" data="29">29</span>
+                <span class="day" data="30">30</span>
+                <span class="day" data="31">31</span>
+    -->
+                </div>
+            </div>
+        </div>
+        <div class="tax_month_wrap">
+            <span class="line"></span>
+            <div class="tax_month_list" id="tax_month_list">
+                <div class="item">
+                    <div class="item_head">
+                    </div>
+                    <div class="item_body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="./js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="./js/data.js?v=1.6"></script>
+<script type="text/javascript" src="./js/calendar.js"></script>
+<script type="text/javascript" src="./js/index.js?v=0.4"></script>
+
+</html>
