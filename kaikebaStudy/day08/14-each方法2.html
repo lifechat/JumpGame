@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    (function(global) {
+        function jQuery(selector) {
+            return new jQuery.fn.init(selector);
+        }
+        //给jquery添加了一个fn属性，fn属性等价于prototype属性
+        jQuery.fn = jQuery.prototype = {
+            constructor: jQuery,
+            init: function(selector) {
+                const elements = document.querySelectorAll(selector);
+
+                for (let i = 0; i < elements.length; i++) {
+                    this[i] = elements[i];
+                }
+                this.length = elements.length;
+            },
+            //此时的css方法还是雏形，后续完善
+            css(name, value) {
+                for (let i = 0; i < this.length; i++) {
+                    let element = this[i];
+                    element.style[name] = value;
+                }
+            }
+        }
+
+        jQuery.fn.init.prototype = jQuery.fn;
+
+        jQuery.fn.extend = jQuery.extend = function(...args) {
+            //2个extend方法区别在于：
+            //1、接收数据的对象发生了变化
+            //  -->$.extend：第一个实参
+            //  -->$.fn.extend：this
+            //2、提供数据的对象发生了变化：
+            //  -->$.extend：第二个参数及其后面的参数
+            //  -->$.fn.extend：所有的参数
+
+            //后面的拷贝过程都是一样的
+            let target, source = [];
+
+            source = [...args];
+            //判断2种情况  
+            //$.extend({})  -->给$添加属性
+            //$.fn.extend({}) -->给$.fn添加属性
+
+            //参数个数>1，就是给第一个实参添加属性
+
+            //  $.extend    -->jQuery.extend 方法调用形式
+            if (args.length === 1) {
+                // $.extend 
+                target = this;
+            } else {
+                // 参数个数>1
+                target = args[0]; //目标对象就是第一个实参
+                source.splice(0, 1); //源对象就是第二个及其后面的实参
+            }
+            Object.assign(target, ...source);
+
+            return target;
+        };
+        //添加一些工具类方法：$.xxx()
+        //$.ajax  $.post $.get  $.type $.each
+        jQuery.extend({
+            //有2种情况，数组使用for循环，对象使用for...in循环
+
+            //不仅仅可以遍历数组，也可以遍历伪数组
+            //{ length:0 }
+            //{ 0:100,length:1 }
+            //{ 0:"a",1:"b",2:"c",length:3 }
+            //在这里，由于存在数组、伪数组2种情况，只能使用一种约定俗成的方式来通过他们的特征来进行判断：length属性，并且值>=0
+            each(obj, callback) {
+                if ((length in obj) && obj.length >= 0) {
+                    for (let i = 0; i < obj.length; i++) {
+                        callback.call(obj[i], obj[i]);
+                    }
+                } else {
+                    for (let i in obj) {
+                        callback.call(obj[i], i, obj[i]);
+                    }
+                }
+            },
+            ajax() {
+                console.log("ajax 方法")
+            }
+        });
+        jQuery.fn.extend({
+            each(callback) {
+                jQuery.each(this.callback);
+            },
+            attr() {
+                console.log("attr方法")
+            },
+            on() {
+                console.log("on 方法")
+            }
+        })
+
+        global.$ = global.jQuery = jQuery;
+    })(window);
+    $.each();
+    $.ajax();
+
+    $("div").attr();
+    $("div").on();
+</script>
+
+</html>
