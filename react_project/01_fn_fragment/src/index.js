@@ -6,6 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import router from './routers'
 import modelIndex from './models'
 import { createBrowserHistory, History } from 'history' 
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.css';
+import './assets/css/index.css';
 // 1 引入dva
 import dva from 'dva'
 // 2 创建dva实例app

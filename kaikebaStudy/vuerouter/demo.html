@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div> 
+   
+</body>
+<script>
+    // 子组件声明props 数组形式接受
+    var son ={
+        template:`
+            <div>
+                接受的父组件的数据:{{title}}
+                <h1>1</h1>
+                <h1>2</h1>
+                <ul>
+                    <li></li>    
+                </ul>
+                <button @click=showNum(123)>改变现实</button>
+            </div>
+        `,
+        props:['title'],
+        methods: {
+            showNum(num){
+                alert(num)
+            }
+        },
+    }
+    // 父组件声明  自定义属性  data声明属性值
+    var App = {
+        components:{
+            son:son
+        },
+        template:`
+            <div>
+                <son title="xxx"></son>
+            </div>
+        `,
+        data(){
+            return{
+                xxx:"我是xxx数据"
+            }
+        },
+    };
+    new Vue({
+        el:"#app",
+        components:{
+            app:App
+        },
+        template:`<app/>`,
+        data(){
+            return{
+                text: '<h1>我是v-text的值!</h1>',
+                isExit: true,
+                isShow: true
+            }
+        },
+        methods: {
+            changeIsShow(e){
+                console.log(e);
+                this.isShow = !this.isShow;
+            }
+        },
+
+    })
+</script>   
+</html>
