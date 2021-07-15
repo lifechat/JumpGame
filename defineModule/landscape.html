@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta http-equiv="cache-control" content="no-cache">
+    <!--<meta name="apple-itunes-app" content="app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL">-->
+    <meta name="msapplication-tap-highlight" content="no">
+    <title></title>
+    <script>
+        var hierarchy = "../../../";
+        document.write(unescape("%3Cscript%20src%3D%27" + hierarchy + "hq/js/initConfig.js?r=" + new Date().getTime() + "%27%3E%3C/script%3E"))
+    </script>
+</head>
+
+<body>
+    <div class="page page-current" id="market_landscape" data-pageTitle="行情-横屏"
+        data-script='hq/scripts/market/landscape.js' data-urlParam="true">
+
+        <section class="main fixed page_flip" data-page="home" style="position: inherit;display: none;">
+            <header class="header">
+                <div class="land_header">
+                    <div class="title_box">
+                        <strong>--</strong>
+                        <p>--</p>
+                    </div>
+                    <div class="value_box" style="padding-top: 0;">
+                        <strong id="xj">--</strong>
+                        <ul class="clearfix">
+                            <li><span id="zd">--</span></li>
+                            <li><span id="zdf">--</span></li>
+                        </ul>
+                    </div>
+                    <div class="info_box gg" style="display:none;">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                            style="margin-right: 20px;!important">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">收</th>
+                                    <td id="zs">--</td>
+                                    <th scope="row">高</th>
+                                    <td id="zg">--</td>
+                                    <th scope="row">额</th>
+                                    <td id="cje">--</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">开</th>
+                                    <td id="jk">--</td>
+                                    <th scope="row">低</th>
+                                    <td id="zdi">--</td>
+                                    <th scope="row">量</th>
+                                    <td id="cjl">--</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="info_box contract" style="display:none;">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">最高</th>
+                                    <td id="zg" class="ared">--</td>
+                                    <th scope="row">总手</th>
+                                    <td id="cjl">--</td>
+                                    <th scope="row">持仓</th>
+                                    <td id="cc">--</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">最低</th>
+                                    <td id="zdi" class="agreen">--</td>
+                                    <th scope="row">现手</th>
+                                    <td id="xl">--</td>
+                                    <th scope="row">昨结</th>
+                                    <td id="zs">--</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="javascript:void(0);" class="icon_close"></a>
+                </div>
+            </header>
+            <article class="content">
+                <div class="land_main">
+                    <div class="inner">
+                        <div class="stock_chart chart_box">
+                            <div class="canvas" id="frame">
+                                <!-- 将框架canvas置于层级最地下 -->
+                                <canvas></canvas>
+                            </div>
+                            <div class="canvas" id="crux" style="z-index: -99">
+                                <!-- 将移动十字架canvas置于层级地下 -->
+                                <canvas></canvas>
+                            </div>
+                            <div class="line" id="min">
+                                <canvas></canvas>
+                            </div>
+                            <div class="line" id="five" style="display: none;">
+                                <canvas></canvas>
+                            </div>
+                            <div class="line" id="day" style="display: none;">
+                                <canvas></canvas>
+                            </div>
+                            <div class="line" id="biaodi" style="display: none;">
+                                <canvas></canvas>
+                            </div>
+                            <div class="line" id="week" style="display: none;">
+                                <canvas></canvas>
+                            </div>
+                            <div class="line" id="month" style="display: none;">
+                                <canvas></canvas>
+                            </div>
+                            <div class="line" id="nMinute" style="display: none;">
+                                <canvas></canvas>
+                            </div>
+                        </div>
+                        <div class="tools_nav">
+                            <!-- 指标、复权 -->
+                            <div class="inner_box">
+                                <ul>
+                                    <li type="1" class="current"><a href="javascript:void(0);">前复权</a></li>
+                                    <li type="2"><a href="javascript:void(0);">后复权</a></li>
+                                    <li type="0"><a href="javascript:void(0);">不复权</a></li>
+                                </ul>
+                                <ul style="overflow: auto;" class="volTarget">
+                                    <li style="display:none;" type="0"><a href="javascript:void(0);">成交量</a></li>
+                                    <li style="display:none;" type="3"><a href="javascript:void(0);">KDJ</a></li>
+                                    <li style="display:none;" type="1"><a href="javascript:void(0);">MACD</a></li>
+                                    <li style="display:none;" type="2"><a href="javascript:void(0);">BOLL</a></li>
+                                    <li style="display:none;" type="8"><a href="javascript:void(0);">WR</a></li>
+                                    <li style="display:none;" type="9"><a href="javascript:void(0);">OBV</a></li>
+                                    <li style="display:none;" type="4"><a href="javascript:void(0);">RSI</a></li>
+                                    <li style="display:none;" type="5"><a href="javascript:void(0);">BIAS</a></li>
+                                    <li style="display:none;" type="7"><a href="javascript:void(0);">PSY</a></li>
+                                    <li style="display:none;" type="10"><a href="javascript:void(0);">ROC</a></li>
+                                    <li style="display:none;" type="6"><a href="javascript:void(0);">CR</a></li>
+                                    <li style="display:none;" type="11"><a href="javascript:void(0);">VR</a></li>
+                                    <li style="display:none;" type="12"><a href="javascript:void(0);">CCI</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="five_list" style="display: none;">
+                            <!-- 五档、明细 -->
+                            <div class="tab_box">
+                                <ul>
+                                    <li class="current"><a href="javascript:void(0);"><span>五档</span></a></li>
+                                    <li><a href="javascript:void(0);"><span>明细</span></a></li>
+                                </ul>
+                            </div>
+                            <div class="five_box wd">
+                                <ul>
+                                    <li id="sell5"><span>--</span>卖5<em>--</em></li>
+                                    <li id="sell4"><span>--</span>卖4<em>--</em></li>
+                                    <li id="sell3"><span>--</span>卖3<em>--</em></li>
+                                    <li id="sell2"><span>--</span>卖2<em>--</em></li>
+                                    <li id="sell1"><span>--</span>卖1<em>--</em></li>
+                                </ul>
+                                <ul>
+                                    <li id="buy1"><span>--</span>买1<em>--</em></li>
+                                    <li id="buy2"><span>--</span>买2<em>--</em></li>
+                                    <li id="buy3"><span>--</span>买3<em>--</em></li>
+                                    <li id="buy4"><span>--</span>买4<em>--</em></li>
+                                    <li id="buy5"><span>--</span>买5<em>--</em></li>
+                                </ul>
+                            </div>
+                            <div class="five_box mx" style="display: none;">
+                                <div class="five_th" style="display: none;">
+                                    <p>
+                                        时间<span>成交价<em>成交量</em></span>
+                                    </p>
+                                </div>
+                                <ul></ul>
+                            </div>
+                        </div>
+                        <div class="amplify" style="display: none;">
+                            <a class="stret" href="javascript:void(0);"></a>
+                            <p stockindex="SH:000001">沪</p>
+                            <p stockindex="SZ:399001">深</p>
+                            <p stockindex="SZ:399006">创</p>
+                        </div>
+                        <div class="stretch" style="display: none;"></div>
+                    </div>
+                </div>
+            </article>
+            <footer class="footer">
+                <div class="land_footer">
+                    <a href="javascript:void(0);" class="index show" style="display: none;">指标</a>
+                    <ul>
+                        <li id="min" class="current"><a href="javascript:void(0);"><span>分时</span></a></li>
+                        <li id="five"><a href="javascript:void(0);"><span>五日</span></a></li>
+                        <li id="day"><a href="javascript:void(0);"><span>日K</span></a></li>
+                        <li id="biaodi"><a href="javascript:void(0);"><span>标的</span></a></li>
+                        <li id="week"><a href="javascript:void(0);"><span>周K</span></a></li>
+                        <li id="month"><a href="javascript:void(0);"><span>月K</span></a></li>
+                        <li id="nMinute" type="1"><a href="javascript:void(0);"><span>1分</span></a></li>
+                        <li id="nMinute" type="5"><a href="javascript:void(0);"><span>5分</span></a></li>
+                        <li id="nMinute" type="15"><a href="javascript:void(0);"><span>15分</span></a></li>
+                        <li id="nMinute" type="30"><a href="javascript:void(0);"><span>30分</span></a></li>
+                        <li id="nMinute" type="60"><a href="javascript:void(0);"><span>60分</span></a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+    </div>
+    <script>
+            (function (a) { var c = a.document, d = c.documentElement, width = (window.innerWidth > 0) ? window.innerWidth : screen.width; height = (window.innerHeight > 0) ? window.innerHeight : screen.height; b = (a = a.devicePixelRatio) ? 1 / a : 1; if (height < 480) { a = 1; b = 1 }; e = navigator.userAgent.toLowerCase().indexOf("android") !== -1 && parseFloat(navigator.userAgent.toLowerCase().slice(navigator.userAgent.toLowerCase().indexOf("android") + 8)) < 4, f = (e) ? "target-densitydpi=device-dpi" : "width=device-width"; console.log(b); c.querySelector('meta[name="viewport"]').setAttribute("content", "" + f + ",initial-scale=" + b + ",maximum-scale=" + b + ",minimum-scale=" + b + ",user-scalable=0"); d.getBoundingClientRect(); d.style.fontSize = 100 * a + "px" })(window);
+    </script>
+</body>
+
+</html>

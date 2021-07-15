@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KlineDemo</title>
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/animate.css">
+    <link rel="stylesheet" href="./css/hsea.min.css">
+    <link rel="stylesheet" href="./css/style_red.css">
+</head>
+
+<body>
+    <article class="content">
+        <div id="container_VIscroll">
+            <div class="visc_wrapper" id="wrapper_VIscroll">
+                <div class="visc_scroller">
+                    <div class="visc_pullDown" style="display: none;">
+                        <span class="visc_pullDownIcon"></span>
+                        <div class="visc_pullDownDiv">
+                            <span class="visc_pullDownLabel">下拉刷新</span> <br /> 最后更新 <span
+                                class="visc_pullDownTime"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="fund_info">
+                            <div class="fund_info cmsapi fund_info2">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <tr>
+                                            <td rowspan="2" colspan="4">
+                                                <h3 id="xj">--</h3>
+                                                <div class="value">
+                                                    <span id="zd">--</span><span id="zdf">--</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p>今&emsp;开</p> <span id="jk">--</span>
+                                            </td>
+                                            <td>
+                                                <p>昨&emsp;收</p> <span id="zs">--</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>成交量</p> <span id="cjl">--</span>
+                                            </td>
+                                            <td>
+                                                <p>振&emsp;幅</p> <span id="zf">--</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>最&emsp;高</p>
+                                                <p>换手率</p>
+                                            </td>
+                                            <td><span id="zg">--</span><span id="hsl">--</span></td>
+                                            <td>
+                                                <p>最&emsp;低</p>
+                                                <p>市盈率</p>
+                                            </td>
+                                            <td><span id="zdi">--</span><span id="syl">--</span></td>
+                                            <td>
+                                                <p>成交额</p>
+                                                <p>总市值</p>
+                                            </td>
+                                            <td><span id="cje">--</span><span id="sz">--</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="info_box" style="display: none;">
+                                <!-- 标准版盘口换成定制盘口 -->
+                                <div class="inner clearfix">
+                                    <div class="a01" id="xj">--</div>
+                                    <div class="a02">
+                                        <p id="zd">--</p>
+                                        <p id="zdf">--</p>
+                                    </div>
+                                    <p class="plateInfo" style="display: none;"></p>
+                                </div>
+                                <div class="chanhand" style="display: none;">
+                                    <p>高<span id="zg">--</span></p>
+                                    <p>开<span id="jk">--</span></p>
+                                    <p>量<span id="cjl">--</span></p>
+                                    <p>涨停<span id="zt">--</span></p>
+                                    <br>
+                                    <p>低<span id="zdi">--</span></p>
+                                    <p>换<span id="hsl">--</span></p>
+                                    <p>额<span id="cje">--</span></p>
+                                    <p>跌停<span id="dt">--</span></p>
+                                    <!-- <i></i> -->
+                                    <em></em>
+                                </div>
+                                <div class="chanhand" style="display: none;">
+                                    <p>高<span id="zg">--</span></p>
+                                    <p>开<span id="jk">--</span></p>
+                                    <p>量<span id="cjl">--</span></p>
+                                    <p>内盘<span id="np" class="agreen">--</span></p>
+                                    <br>
+                                    <p>低<span id="zdi">--</span></p>
+                                    <p>换<span id="hsl">--</span></p>
+                                    <p>额<span id="cje">--</span></p>
+                                    <p>外盘<span id="wp" class="ared">--</span></p>
+                                    <em></em>
+                                </div>
+                            </div>
+
+                            <div class="fund_box fund_chart">
+                                <div class="tab_title">
+                                    <ul>
+                                        <li id="min" class="current"><a href="javascript:void(0);"><span>分时</span></a>
+                                        </li>
+                                        <li id="five"><a href="javascript:void(0);"><span>五日</span></a></li>
+                                        <li id="day"><a href="javascript:void(0);"><span>日K</span></a></li>
+                                        <li id="week"><a href="javascript:void(0);"><span>周K</span></a></li>
+                                        <li id="month"><a href="javascript:void(0);"><span>月K</span></a></li>
+                                        <li id="nMinute"><a href="javascript:void(0);"><span>分钟<i></i></span></a></li>
+                                    </ul>
+                                    <div class="drop_minute" style="display: none;">
+                                        <a href="javascript:void(0);" id="1">1分</a>
+                                        <a href="javascript:void(0);" id="5">5分</a>
+                                        <a href="javascript:void(0);" id="15">15分</a>
+                                        <a href="javascript:void(0);" id="30">30分</a>
+                                        <a href="javascript:void(0);" id="60">60分</a>
+                                    </div>
+                                </div>
+                                <div class="inner">
+                                    <div class="set_line padleft" style="display: none;">
+                                        <div></div>
+                                        <a href="javascript:void(0);" class="setmin">设置</a>
+                                    </div>
+                                    <div class="stock_chart chart_box">
+                                        <div class="canvas" id="frame">
+                                            <canvas></canvas>
+                                        </div>
+                                        <div class="canvas" id="crux">
+                                            <canvas></canvas>
+                                        </div>
+                                        <div id="wrapper_HIscroll"
+                                            style="width: 100%; height: 100%;transform: scale(1,1);">
+                                            <!-- 需将外层高度、宽度赋予div，不然影响内层.line div的高度 -->
+                                            <div id="scroller_HIscroll" style="width: 100%; height: 100%;">
+                                                <!-- 需将外层高度、宽度赋予div，不然影响内层.line div的高度 -->
+                                                <div class="line" id="min">
+                                                    <canvas></canvas>
+                                                </div>
+                                                <div class="line" id="five" style="display: none;">
+                                                    <canvas></canvas>
+                                                </div>
+                                                <div class="line" id="day" style="display: none;">
+                                                    <canvas></canvas>
+                                                </div>
+                                                <div class="line" id="week" style="display: none;">
+                                                    <canvas></canvas>
+                                                </div>
+                                                <div class="line" id="month" style="display: none;">
+                                                    <canvas></canvas>
+                                                </div>
+                                                <div class="line" id="nMinute" style="display: none;">
+                                                    <canvas></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="five_list">
+                                        <div class="tab_box">
+                                            <ul>
+                                                <li class="current"><a href="javascript:void(0);"><span>五档</span></a>
+                                                </li>
+                                                <li><a href="javascript:void(0);"><span>明细</span></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="five_box wd">
+                                            <ul>
+                                                <li id="sell5"><span>--</span>卖5<em>--</em></li>
+                                                <li id="sell4"><span>--</span>卖4<em>--</em></li>
+                                                <li id="sell3"><span>--</span>卖3<em>--</em></li>
+                                                <li id="sell2"><span>--</span>卖2<em>--</em></li>
+                                                <li id="sell1"><span>--</span>卖1<em>--</em></li>
+                                            </ul>
+                                            <ul>
+                                                <li id="buy1"><span>--</span>买1<em>--</em></li>
+                                                <li id="buy2"><span>--</span>买2<em>--</em></li>
+                                                <li id="buy3"><span>--</span>买3<em>--</em></li>
+                                                <li id="buy4"><span>--</span>买4<em>--</em></li>
+                                                <li id="buy5"><span>--</span>买5<em>--</em></li>
+                                            </ul>
+                                        </div>
+                                        <div class="five_box mx" style="display: none;">
+                                            <div class="five_th" style="display: none;">
+                                                <p>时间<span>成交价<em>成交量</em></span></p>
+                                            </div>
+                                            <ul></ul>
+                                        </div>
+                                        <!-- <div class="tenlisting"><span>查看十档行情</span></div> -->
+                                    </div>
+                                    <div class="adjust_btns" style="display: none;">
+                                        <a href="javascript:void(0);" style="float: left;"></a>
+                                        <div class="float_btns" style="float: left;">
+                                            <a href="javascript:void(0);"></a>
+                                            <a href="javascript:void(0);"></a>
+                                            <a href="javascript:void(0);"></a>
+                                            <a href="javascript:void(0);"></a>
+                                        </div>
+                                        <a class="expand" href="javascript:void(0);"></a>
+                                    </div>
+                                    <div class="bollselet" style="display: none;">
+                                    </div>
+                                    <div class="amplify">
+                                        <div style="float: left;">
+                                            <a class="stret" href="javascript:void(0);"></a>
+                                            <p stockindex="SH:000001">沪</p>
+                                            <p stockindex="SZ:399001">深</p>
+                                            <p stockindex="SZ:399006">创</p>
+                                        </div>
+                                        <a class="expand" href="javascript:void(0);"></a>
+                                    </div>
+                                    <div class="stretch" style="display: none;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</body>
+
+</html>

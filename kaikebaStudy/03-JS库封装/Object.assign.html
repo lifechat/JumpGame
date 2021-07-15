@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS的深浅拷贝</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var num = 10;
+    var obj = {
+        name:"Nicholas"
+    };
+    var num2 = num;
+    var obj2 = obj;
+
+    obj2.name = "lee";
+    console.log(num2);
+    console.log(obj2.name);
+    console.log(obj.name); 
+    // 引用类型  对象的修改会影响其他的复制对象 引用地址值依然不变
+
+    function shallowCopy(obj){
+        var copy = {};
+        for(key in obj){
+            if(obj.hasOwnProperty(key)){
+                copy[key] = obj[key];
+            }
+        }
+        return copy
+    }
+    var o1 = {};
+    Object.assign(o1,{a:10},{b:10});
+    console.log(o1)
+
+    // deepClone 深拷贝
+    let deepClone  = function(currobj){
+        // 判断是引用还是值类型
+        if(typeof currobj !== "object"){
+            return currobj;
+        }
+        if(currobj instanceof Array){
+            
+        }
+    }
+</script>
+</html>

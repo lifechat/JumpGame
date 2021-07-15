@@ -7,13 +7,7 @@ import Home from '../components/Home'
 
 let fn  = function({history,app}){
     return (
-        <Router history={history}>
-            <React.Fragment>
-                <Route path="/Hometest" exact component={Hometest}/>
-                <Route path="/Signin" exact component={Signin}/>
-                <Route path="/Home" exact component={Home}/>
-            </React.Fragment>
-        </Router>
+        <div>hello</div>
     )
 }
 
