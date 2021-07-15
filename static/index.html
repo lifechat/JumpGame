@@ -1,0 +1,740 @@
+<template>
+    <div class="tvContent">
+      <div id="tv_chart_container"></div>
+    </div>
+  </template>
+  
+  <style scoped>
+  .tvContent {
+    width: 100%;
+    height: 800px;
+    background: #061f46;
+    border: 1px solid #4390e4;
+    border-radius: 5px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  #tv_chart_container {
+    width: 100%;
+    height: 100%;
+  }
+  </style>
+  <script>
+  import { mapActions } from "vuex";
+  export default {
+    name: "tv",
+    props: {
+      symbol: {
+        type: String,
+        required: true,
+        default: "BTC/USDT",
+      },
+      currency_id: {
+        type: Number,
+        required: true,
+      },
+    },
+    data() {
+      return {
+        widget: null, //创建的实例
+        symbolInfo: null, //信息
+        priceScale: 100000, //价格精度
+        aa: null,
+        time1: null, 
+      };
+    },
+    // 我使用的socket
+    sockets: {
+      //查看socket是否渲染成功
+      connect() {},
+      disconnect() {
+        console.log("断开链接");
+      }, //检测socket断开链接
+      reconnect() {
+        console.log("重新链接");
+        // this.$socket.emit("connection", 1);
+        this.$socket.open();
+      },
+      //客户端接收后台传输的socket事件
+      kline: function (msg) {
+        let obj = {};
+        var that = this;
+        let type = that.$store.state.type;
+  
+        if (that.symbol == msg.symbol && msg.period == type) {
+          obj.open = Number(msg.open);
+          obj.low = Number(msg.low);
+          obj.high = Number(msg.high);
+          obj.close = Number(msg.close);
+          obj.volume = Number(msg.volume);
+          obj.time = Number(msg.time);
+          if (that.$store.state.nextId != msg.id) {
+            that.$store.commit("upId", msg.id);
+            that.$store.commit("upSma1", msg.sma1);
+            that.$store.commit("upSma2", msg.sma2);
+          }
+  
+          this.aa && this.aa(obj);
+        }
+      },
+    },
+    computed: {
+      listenState() {
+        //监听交易对
+        return this.symbol;
+      },
+      kind() {
+        return this.symbol.split("/")[0].toLowerCase();
+      },
+      // 我传给后台的东西 自己进行删减
+      emitData() {
+        return (
+          this.kind +
+          "-" +
+          this.$store.state.type +
+          "-" +
+          this.$store.state.sma1 +
+          "-" +
+          this.$store.state.sma2
+        );
+      },
+    },
+    watch: {
+      listenState: function (a, b) {
+        //监听交易对
+        if (a != b && b != "") {
+          this.widget.setSymbol(
+            a,
+            localStorage.getItem("tim"),
+            function onReadyCallback() {}
+          ); //切换币种
+        }
+      },
+      symbol: {
+        handler(n) {
+          this.$socket.on("reconnect");
+        },
+        deep: true, // 深度监听父组件传过来对象变化
+        immediate: true,
+      },
+    },
+    mounted() {
+      this.createWidget();
+    },
+    destroyed() {
+      this.removeWidget();
+    },
+  
+    methods: {
+      ...mapActions({
+        newTimeshar: "home/newTimeshar",
+      }),
+      connect(real) {
+        this.aa = real;
+        let that = this;
+        //实时数据进行回调链接socket
+        this.$socket.on("connect", function () {
+          this.$socket.on("kline", (msg) => {
+            let obj = {};
+            let type = that.$store.state.type;
+            if (that.symbol == msg.symbol && msg.period == type) {
+              obj.open = Number(msg.open);
+              obj.low = Number(msg.low);
+              obj.high = Number(msg.high);
+              obj.close = Number(msg.close);
+              obj.volume = Number(msg.volume);
+              obj.time = Number(msg.time);
+              if (that.$store.state.nextId != msg.id) {
+                that.$store.commit("upId", msg.id);
+                that.$store.commit("upSma1", msg.sma1);
+                that.$store.commit("upSma2", msg.sma2);
+              }
+  
+              real(obj);
+            }
+          });
+        });
+      },
+      createWidget() {
+        let _this = this;
+        this.$nextTick(function () {
+          let widget = (_this.widget = new TradingView.widget({
+            symbol: _this.symbol,
+            interval: 1,
+            debug: false,
+            fullscreen: false,
+            autosize: true,
+            container_id: "tv_chart_container",
+            // datafeed: new Datafeeds.UDFCompatibleDatafeed(
+            //   "http://demo_feed.tradingview.com"
+            // ),
+            datafeed: _this.createFeed(),
+            library_path: "static/tradeview/charting_library/",
+            custom_css_url: "bundles/new.css",
+            locale: "zh",
+            width: "100%",
+            allow_symbol_change: true,
+            drawings_access: {
+              type: "black",
+              // tools: [{name: "Regression Trend"}]//todo: moje
+              tools: [
+                { name: "Trend Line", grayed: true },
+                { name: "Trend Angle", grayed: true },
+              ], //todo: bb
+            },
+            disabled_features: [
+              //  禁用的功能
+              // "left_toolbar", //左侧菜单栏
+              "widget_logo", //底部logo
+              "header_saveload", //头部保存功能
+              "compare_symbol",
+              "display_market_status",
+              "go_to_date",
+              "header_chart_type", //头部类型 下面有自定义
+              "header_compare",
+              "header_interval_dialog_button",
+              "header_resolutions",
+              "header_screenshot", //图片上传
+              "header_symbol_search",
+              "header_undo_redo",
+              // "legend_context_menu", //显示币种名称
+              "show_hide_button_in_legend",
+              "show_interval_dialog_on_key_press",
+              // "symbol_info",
+              "timeframes_toolbar", //底部时间信息
+              "use_localstorage_for_settings",
+              "volume_force_overlay",
+            ],
+            enabled_features: [
+              //  启用的功能（备注：disable_resolution_rebuild 功能用于控制当时间范围为1个月时，日期刻度是否都是每个月1号
+              "dont_show_boolean_study_arguments",
+              "use_localstorage_for_settings",
+              "remove_library_container_border",
+              "save_chart_properties_to_local_storage",
+              "side_toolbar_in_fullscreen_mode",
+              "hide_last_na_study_output",
+              "constraint_dialogs_movement",
+              "legend_widget",
+            ],
+            charts_storage_url: "http://saveload.tradingview.com",
+            charts_storage_api_version: "1.1",
+            toolbar_bg: "transparent",
+            timezone: "Asia/Shanghai",
+            studies_overrides: {
+              "volume.precision": "1000",
+            },
+            overrides: _this.overrides(),
+          }));
+  
+          widget.MAStudies = [];
+          widget.selectedIntervalButton = null;
+          widget.onChartReady(function () {
+            let buttonArr = [
+              {
+                value: "1",
+                period: "1min",
+                text: "1分",
+                chartType: 1,
+                type: "1min",
+              },
+              {
+                value: "5",
+                period: "5min",
+                text: "5分",
+                chartType: 1,
+                type: "5min",
+              },
+              {
+                value: "30",
+                period: "30min",
+                text: "30分",
+                chartType: 1,
+                type: "30min",
+              },
+              {
+                value: "60",
+                period: "60min",
+                text: "60分",
+                chartType: 1,
+                type: "60min",
+              },
+              {
+                value: "1D",
+                period: "1D",
+                text: "1天",
+                chartType: 1,
+                type: "1day",
+              },
+              {
+                value: "1W",
+                period: "1W",
+                text: "1周",
+                chartType: 1,
+                type: "1week",
+              },
+              {
+                value: "1M",
+                period: "1mon",
+                text: "1月",
+                chartType: 1,
+                type: "1mon",
+              },
+            ];
+            let btn = {};
+            let nowTime = "";
+  
+            buttonArr.forEach((v, i) => {
+              let button = widget.createButton();
+              button.attr("title", v.text).addClass("my2").text(v.text);
+              if (v.text === "5分") {
+                button.css({
+                  color: "#5786d2",
+                  "border-bottom": "1px solid #5786d2",
+                });
+                localStorage.setItem("tim", "5");
+              }
+              btn = button.on("click", function (e) {
+                $(this).parents(".left").children().find(".my2").removeAttr("style");
+                handleClick(e, v.value, v.type);
+                button.css({
+                  color: "#5786d2",
+                  "border-bottom": "1px solid #5786d2",
+                });
+                _this.$store.commit("upType", v.type);
+                widget.chart().setChartType(v.chartType); //改变K线类型
+              });
+            });
+            let handleClick = (e, value, type) => {
+              _this.setSymbol = function (symbol, value) {
+                gh.chart().setSymbol(symbol, value);
+              };
+              widget.chart().setResolution(value, function onReadyCallback() {}); //改变分辨率
+              $(e.target)
+                .addClass("mydate")
+                .closest("div.space-single")
+                .siblings("div.space-single")
+                .find("div.button")
+                .removeClass("mydate");
+            };
+          });
+  
+          _this.widget = widget;
+        });
+      },
+      createFeed() {
+        let this_vue = this;
+        let Datafeed = {};
+  
+        Datafeed.DataPulseUpdater = function (datafeed, updateFrequency) {
+          this._datafeed = datafeed;
+          this._subscribers = {};
+  
+          this._requestsPending = 0;
+          var that = this;
+  
+          var update = function () {
+            if (that._requestsPending > 0) {
+              return;
+            }
+  
+            for (var listenerGUID in that._subscribers) {
+              var subscriptionRecord = that._subscribers[listenerGUID];
+              var resolution = subscriptionRecord.resolution;
+  
+              var datesRangeRight = parseInt(new Date().valueOf() / 1000);
+  
+              //	BEWARE: please note we really need 2 bars, not the only last one
+              //	see the explanation below. `10` is the `large enough` value to work around holidays
+              var datesRangeLeft =
+                datesRangeRight - that.periodLengthSeconds(resolution, 10);
+  
+              that._requestsPending++;
+  
+              (function (_subscriptionRecord) {
+                // eslint-disable-line
+                that._datafeed.getBars(
+                  _subscriptionRecord.symbolInfo,
+                  resolution,
+                  datesRangeLeft,
+                  datesRangeRight,
+                  function (bars) {
+                    that._requestsPending--;
+  
+                    //	means the subscription was cancelled while waiting for data
+                    if (!that._subscribers.hasOwnProperty(listenerGUID)) {
+                      return;
+                    }
+  
+                    if (bars.length === 0) {
+                      return;
+                    }
+  
+                    var lastBar = bars[bars.length - 1];
+                    if (
+                      !isNaN(_subscriptionRecord.lastBarTime) &&
+                      lastBar.time < _subscriptionRecord.lastBarTime
+                    ) {
+                      return;
+                    }
+  
+                    var subscribers = _subscriptionRecord.listeners;
+  
+                    //	BEWARE: this one isn't working when first update comes and this update makes a new bar. In this case
+                    //	_subscriptionRecord.lastBarTime = NaN
+                    var isNewBar =
+                      !isNaN(_subscriptionRecord.lastBarTime) &&
+                      lastBar.time > _subscriptionRecord.lastBarTime;
+  
+                    //	Pulse updating may miss some trades data (ie, if pulse period = 10 secods and new bar is started 5 seconds later after the last update, the
+                    //	old bar's last 5 seconds trades will be lost). Thus, at fist we should broadcast old bar updates when it's ready.
+                    if (isNewBar) {
+                      if (bars.length < 2) {
+                        throw new Error(
+                          "Not enough bars in history for proper pulse update. Need at least 2."
+                        );
+                      }
+  
+                      var previousBar = bars[bars.length - 2];
+                      for (var i = 0; i < subscribers.length; ++i) {
+                        subscribers[i](previousBar);
+                      }
+                    }
+  
+                    _subscriptionRecord.lastBarTime = lastBar.time;
+  
+                    for (var i = 0; i < subscribers.length; ++i) {
+                      subscribers[i](lastBar);
+                    }
+                  },
+  
+                  //	on error
+                  function () {
+                    that._requestsPending--;
+                  }
+                );
+              })(subscriptionRecord);
+            }
+          };
+  
+          if (typeof updateFrequency != "undefined" && updateFrequency > 0) {
+            setInterval(update, updateFrequency);
+          }
+        };
+  
+        Datafeed.DataPulseUpdater.prototype.periodLengthSeconds = function (
+          resolution,
+          requiredPeriodsCount
+        ) {
+          var daysCount = 0;
+          if (resolution === "D") {
+            daysCount = requiredPeriodsCount;
+          } else if (resolution === "M") {
+            daysCount = 31 * requiredPeriodsCount;
+          } else if (resolution === "W") {
+            daysCount = 7 * requiredPeriodsCount;
+          } else {
+            daysCount = (requiredPeriodsCount * resolution) / (24 * 60);
+          }
+  
+          return daysCount * 24 * 60 * 60;
+        };
+  
+        Datafeed.DataPulseUpdater.prototype.subscribeDataListener = function (
+          symbolInfo,
+          resolution,
+          newDataCallback,
+          listenerGUID
+        ) {
+          this._datafeed._logMessage("Subscribing " + listenerGUID);
+  
+          if (!this._subscribers.hasOwnProperty(listenerGUID)) {
+            this._subscribers[listenerGUID] = {
+              symbolInfo: symbolInfo,
+              resolution: resolution,
+              lastBarTime: NaN,
+              listeners: [],
+            };
+          }
+  
+          this._subscribers[listenerGUID].listeners.push(newDataCallback);
+        };
+  
+        Datafeed.DataPulseUpdater.prototype.unsubscribeDataListener = function (
+          listenerGUID
+        ) {
+          this._datafeed._logMessage("Unsubscribing " + listenerGUID);
+          delete this._subscribers[listenerGUID];
+        };
+  
+        Datafeed.Container = function (updateFrequency) {
+          this._configuration = {
+            supports_search: false,
+            supports_group_request: false,
+            supported_resolutions: ["5", "15", "30", "60", "1D", "1W", "1M"],
+            supports_marks: true,
+            supports_timescale_marks: true,
+            exchanges: ["gh"],
+          };
+  
+          this._barsPulseUpdater = new Datafeed.DataPulseUpdater(
+            this,
+            updateFrequency || 10 * 1000
+          );
+          // this._quotesPulseUpdater = new Datafeed.QuotesPulseUpdater(this);
+  
+          this._enableLogging = true;
+          this._callbacks = {};
+  
+          this._initializationFinished = true;
+          this._fireEvent("initialized");
+          this._fireEvent("configuration_ready");
+        };
+  
+        Datafeed.Container.prototype._fireEvent = function (event, argument) {
+          if (this._callbacks.hasOwnProperty(event)) {
+            var callbacksChain = this._callbacks[event];
+            for (var i = 0; i < callbacksChain.length; ++i) {
+              callbacksChain[i](argument);
+            }
+  
+            this._callbacks[event] = [];
+          }
+        };
+  
+        Datafeed.Container.prototype._logMessage = function (message) {
+          if (this._enableLogging) {
+            var now = new Date();
+          }
+        };
+  
+        Datafeed.Container.prototype.on = function (event, callback) {
+          if (!this._callbacks.hasOwnProperty(event)) {
+            this._callbacks[event] = [];
+          }
+  
+          this._callbacks[event].push(callback);
+          return this;
+        };
+  
+        Datafeed.Container.prototype.onReady = function (callback) {
+          let that = this;
+          if (that._configuration) {
+            setTimeout(function () {
+              callback(that._configuration);
+            }, 0);
+          } else {
+            this.on("configuration_ready", function () {
+              callback(that._configuration);
+            });
+          }
+        };
+  
+        Datafeed.Container.prototype.resolveSymbol = function (
+          symbolName,
+          onSymbolResolvedCallback,
+          onResolveErrorCallback
+        ) {
+          this._logMessage("GOWNO :: resolve symbol " + symbolName);
+          Promise.resolve().then(() => {
+            onSymbolResolvedCallback({
+              name: this_vue.symbol,
+              timezone: "Asia/Shanghai",
+              pricescale: this_vue.priceScale,
+              minmov: 1, //minmov(最小波动), pricescale(价格精度), minmove2, fractional(分数)
+              minmov2: 0, //这是一个神奇的数字来格式化复杂情况下的价格。
+              ticker: this_vue.symbol,
+              description: "",
+              type: "bitcoin",
+              volume_precision: 8,
+              // "exchange-traded": "sdt",
+              // "exchange-listed": "sdt",
+              //现在，这两个字段都为某个交易所的略称。将被显示在图表的图例中，以表示此商品。目前此字段不用于其他目的。
+              has_intraday: true,
+              has_weekly_and_monthly: true,
+              has_no_volume: false, //布尔表示商品是否拥有成交量数据。
+              session: "24x7",
+              supported_resolutions: ["5", "15", "30", "60", "1D", "1W", "1M"],
+            });
+          });
+        };
+  
+        //初始化数据
+        Datafeed.Container.prototype.getBars = async function (
+          symbolInfo,
+          resolution,
+          rangeStartDate,
+          rangeEndDate,
+          onHistoryCallback,
+          onErrorCallback
+        ) {
+          if (
+            resolution.indexOf("D") == -1 &&
+            resolution.indexOf("W") == -1 &&
+            resolution.indexOf("M") == -1
+          ) {
+            resolution = resolution + "min";
+          } else if (resolution.indexOf("W") != -1 || resolution.indexOf("M") != -1) {
+            resolution = resolution;
+          }
+  
+          //this_vue.newTimeshar  我请求历史数据的封装方法 换成自己的
+          const res = await this_vue.newTimeshar({
+            from: rangeStartDate,
+            to: rangeEndDate,
+            symbol: symbolInfo.name,
+            period: resolution,
+            currency_id: this_vue.currency_id,
+          });
+  
+          if (res.code == 1 && res.data.length > 0) {
+            this_vue.$store.commit("upSma1", res.data[res.data.length - 2].sma1);
+            this_vue.$store.commit("upSma2", res.data[res.data.length - 2].sma2);
+            //我是实时传送数据到后台 如果用不到自己删除
+            this_vue.time1 = setInterval(function () {
+              this_vue.$socket.emit("sub", this_vue.emitData); //触发socket连接
+            }, 1000);
+            //清楚计时器
+            this_vue.$once("hook:beforeDestroy", () => {
+              clearInterval(this_vue.time1);
+            });
+            res.data.forEach((item, i) => {
+              item.open = Number(item.open);
+              item.close = Number(item.close);
+              item.high = Number(item.high);
+              item.low = Number(item.low);
+            });
+            onHistoryCallback(res.data, { noData: false });
+            onHistoryCallback([], { noData: true });
+          }
+          if (!res.data || res.code == -1) {
+            onHistoryCallback([], { noData: true });
+          }
+          if (res.data && res.data.length == 0) {
+            onHistoryCallback([], { noData: true });
+          }
+        };
+        //实时数据
+        Datafeed.Container.prototype.subscribeBars = function (
+          symbolInfo,
+          resolution,
+          onRealtimeCallback,
+          listenerGUID,
+          onResetCacheNeededCallback
+        ) {
+          this_vue.connect(onRealtimeCallback);
+  
+          //this._barsPulseUpdater.subscribeDataListener(symbolInfo, resolution, onRealtimeCallback, listenerGUID, onResetCacheNeededCallback);
+        };
+  
+        Datafeed.Container.prototype.unsubscribeBars = function (listenerGUID) {
+          this._barsPulseUpdater.unsubscribeDataListener(listenerGUID);
+        };
+  
+        return new Datafeed.Container();
+      },
+  
+      updateData(data) {
+        if (data) {
+          this.$emit("real-time", data);
+        }
+      },
+  
+      updateWidget(item) {
+        this.symbolInfo = {
+          name: item,
+          ticker: item,
+          description: "",
+          session: "24x7",
+          supported_resolutions: ["5", "15", "30", "60", "1D", "1W", "1M"],
+          has_intraday: true,
+          has_daily: true,
+          has_weekly_and_monthly: true,
+          timezone: "UTC",
+        };
+  
+        this.removeWidget();
+        this.createWidget();
+      },
+      removeWidget() {
+        if (this.widget) {
+          this.widget.remove();
+          this.widget = null;
+        }
+      },
+      overrides() {
+        let style = {
+          up: "#12b886", //升
+          down: "#fa5252", //降
+          bg: "#061f46",  //背景
+          grid: "rgba(122, 152, 247, .2)",
+          cross: "#fff", //十字线
+          border: "rgba(122, 152, 247, .2)",
+          text: "rgba(122, 152, 247, .6)", //文字
+          areatop: "rgba(122, 152, 247, .2)",
+          areadown: "rgba(122, 152, 247, .2)",
+          line: "rgba(122, 152, 247, .2)",
+        };
+        return {
+          volumePaneSize: "medium", //large, medium, small, tiny
+          "paneProperties.topMargin": "20",
+          "scalesProperties.lineColor": style.text,
+          "scalesProperties.textColor": style.text,
+          "paneProperties.background": style.bg, //改变背景色的重要代码
+          "paneProperties.vertGridProperties.color": style.grid,
+          "paneProperties.horzGridProperties.color": style.grid,
+          "paneProperties.crossHairProperties.color": style.cross,
+          "paneProperties.crossHairProperties.lineType": 2,
+          "paneProperties.legendProperties.showLegend": true,
+          "paneProperties.legendProperties.showStudyArguments": true,
+          "paneProperties.legendProperties.showStudyTitles": true,
+          "paneProperties.legendProperties.showStudyValues": true,
+          "paneProperties.legendProperties.showSeriesTitle": true,
+          "paneProperties.legendProperties.showSeriesOHLC": true,
+          "mainSeriesProperties.candleStyle.upColor": style.up,
+          "mainSeriesProperties.candleStyle.downColor": style.down,
+          "mainSeriesProperties.candleStyle.drawWick": true,
+          "mainSeriesProperties.candleStyle.drawBorder": true,
+          "mainSeriesProperties.candleStyle.borderColor": style.border,
+          "mainSeriesProperties.candleStyle.borderUpColor": style.up,
+          "mainSeriesProperties.candleStyle.borderDownColor": style.down,
+          "mainSeriesProperties.candleStyle.wickUpColor": style.up,
+          "mainSeriesProperties.candleStyle.wickDownColor": style.down,
+          "mainSeriesProperties.candleStyle.barColorsOnPrevClose": false,
+          "mainSeriesProperties.hollowCandleStyle.upColor": style.up,
+          "mainSeriesProperties.hollowCandleStyle.downColor": style.down,
+  
+          "mainSeriesProperties.hollowCandleStyle.drawWick": true,
+          "mainSeriesProperties.hollowCandleStyle.drawBorder": true,
+          "mainSeriesProperties.hollowCandleStyle.borderColor": style.border,
+          "mainSeriesProperties.hollowCandleStyle.borderUpColor": style.up,
+          "mainSeriesProperties.hollowCandleStyle.borderDownColor": style.down,
+          "mainSeriesProperties.hollowCandleStyle.wickColor": style.line,
+          "mainSeriesProperties.haStyle.upColor": style.up,
+          "mainSeriesProperties.haStyle.downColor": style.down,
+          "mainSeriesProperties.haStyle.drawWick": true,
+          "mainSeriesProperties.haStyle.drawBorder": true,
+          "mainSeriesProperties.haStyle.borderColor": style.border,
+          "mainSeriesProperties.haStyle.borderUpColor": style.up,
+          "mainSeriesProperties.haStyle.borderDownColor": style.down,
+          "mainSeriesProperties.haStyle.wickColor": style.border,
+          "mainSeriesProperties.haStyle.barColorsOnPrevClose": false,
+          "mainSeriesProperties.barStyle.upColor": style.up,
+          "mainSeriesProperties.barStyle.downColor": style.down,
+          "mainSeriesProperties.barStyle.barColorsOnPrevClose": false,
+          "mainSeriesProperties.barStyle.dontDrawOpen": false,
+          "mainSeriesProperties.lineStyle.color": style.border,
+          "mainSeriesProperties.lineStyle.linewidth": 2,
+          "mainSeriesProperties.lineStyle.styleType": 2,
+          "mainSeriesProperties.lineStyle.linestyle": 2,
+          "mainSeriesProperties.lineStyle.priceSource": "close",
+          "mainSeriesProperties.areaStyle.color1": style.areatop,
+          "mainSeriesProperties.areaStyle.color2": style.areadown,
+          "mainSeriesProperties.areaStyle.linecolor": style.border,
+          "mainSeriesProperties.areaStyle.linewidth": 2,
+          "mainSeriesProperties.areaStyle.linestyle": 2,
+          "mainSeriesProperties.areaStyle.priceSource": "close",
+        };
+      },
+    },
+  };
+  </script>
